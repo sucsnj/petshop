@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Rogens",
+    "email": "rgn@example.com",
+    "endereco": "Rua do Sol"
+  },
+  {
+    "id": 2,
+    "name": "Cris",
+    "email": "cris@example.com",
+    "endereco": "Rua da Lua"
+  },
+  {
+    "id": 3,
+    "name": "alyson",
+    "email": "aly@example.com",
+    "endereco": "Rua do Sol"
+  }
+]

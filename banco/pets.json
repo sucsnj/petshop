@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Smeagol",
+    "email": "rgn@example.com",
+    "endereco": "Rua do Sol",
+    "tutorId": 1
+  },
+  {
+    "id": 2,
+    "name": "Coca-Cola",
+    "email": "cris@example.com",
+    "endereco": "Rua da Lua",
+    "tutorId": 2
+  },
+  {
+    "id": 3,
+    "name": "Frufru",
+    "email": "aly@example.com",
+    "endereco": "Rua do Sol",
+    "tutorId": 3
+  }
+]
