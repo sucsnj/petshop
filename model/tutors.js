@@ -1,6 +1,6 @@
 const fs = require('fs');
-const localDoBanco = 'banco/tutors.json'; // local do banco de dados
-const banco = 'tutors';
+// const localDoBanco = 'banco/tutors.json'; // local do banco de dados json
+const banco = 'tutors'; // nome da tabela do banco de dados
 const db = require('../banco/database');
 
 // function pegarTutores(res, next) {
@@ -41,18 +41,27 @@ function pegarTutorPorId(req, res, next) {
 }
 
 function criarTutor(req, res) {
-    const email = req.body.email;
-    db.get(`
-        SELECT email FROM ${banco} WHERE email = ?`, [email], (err, row) => {
-        if (row) {
-            return res.json('Email já cadastrado.')
-        }
+    const corpo = req.body;
 
-        db.all(`INSERT INTO ${banco} 
-                (name, email, phone)
-                values
-                ('${req.body.name}', '${req.body.email}', '${req.body.phone}')
-                `, (err, data) => {
+    for (let key in corpo) {
+        if (key.trim() === "") {
+            return res.json('Preencha todos os campos!');
+        }
+    }
+    db.get(`
+            SELECT email FROM ${banco} WHERE email = ?`, [corpo.email], (err, row) => {
+        if (row) {
+            return res.json('Email já cadastrado.');
+        }
+        db.run(`INSERT INTO ${banco} 
+                    (name, email, phone)
+                    values
+                    (?, ?, ?)
+                    `, [corpo.name, corpo.email, corpo.phone], function (err) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Erro ao inserir o elemento' });
+            }
             return res.json('Elemento inserido!');
         });
     });
@@ -60,22 +69,24 @@ function criarTutor(req, res) {
 
 function atualizarTutor(req, res) {
     const id = Number(req.params.id);
-    const { name, email, phone } = req.body;
+    const corpo = req.body;
 
     db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, row) => {
         if (!row) {
             return res.json('Id não encontrado.')
         }
 
-        const nameAtualizado = name && name.trim() !== "" ? name : row.name;
-        const emailAtualizado = email && email.trim() !== "" ? email : row.email;
-        const phoneAtualizado = phone && phone.trim() !== "" ? phone : row.phone;
+        const novoCorpo = {};
+        for (let key in row) {
+            novoCorpo[key] = corpo[key] && corpo[key].trim() !== "" ? corpo[key] : row[key];
+        }
+
         db.run(`UPDATE ${banco} 
             SET name=?, email=?, phone=? 
-            WHERE id=?`, [nameAtualizado, emailAtualizado, phoneAtualizado, id], function (err) {
+            WHERE id=?`, [novoCorpo.name, novoCorpo.email, novoCorpo.phone, id], function (err) {
             if (err) {
                 console.error(err);
-                return res.json('Erro ao atualizar o registro.');
+                return res.status(500).json({ error: 'Erro ao atualizar o elemento' });
             }
             return res.json('Elemento atualizado!');
         });
@@ -88,8 +99,12 @@ function apagarTutor(req, res) {
         if (!rows) {
             return res.json('Id não encontrado.')
         }
-        db.all(`DELETE FROM ${banco} WHERE id= ?`, [id], (err, apagado) => {
-            return res.json('Elemento apgado!');
+        db.run(`DELETE FROM ${banco} WHERE id= ?`, [id], function (err) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Erro ao apagar o elemento' });
+            }
+            return res.json('Elemento apagado!');
         });
     });
 }
