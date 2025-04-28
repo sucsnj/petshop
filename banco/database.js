@@ -29,4 +29,26 @@ db.serialize(() => {
        )`);
 });
 
+db.serialize(() => {
+    db.run(
+       `CREATE TABLE IF NOT EXISTS products (
+           id INTEGER PRIMARY KEY AUTOINCREMENT,
+           name VARCHAR(150) NOT NULL,
+           price INTEGER NOT NULL,
+           category VARCHAR(150) NOT NULL,
+           stock INTEGER NOT NULL
+       )`);
+});
+
+db.serialize(() => {
+    db.run(
+       `CREATE TABLE IF NOT EXISTS services (
+           id INTEGER PRIMARY KEY AUTOINCREMENT,
+           name VARCHAR(150) NOT NULL,
+           price INTEGER NOT NULL,
+           duration VARCHAR(10),
+           description VARCHAR(500) 
+       )`);
+});
+
 module.exports = db;

@@ -1,4 +1,11 @@
 -- INSERT INTO tutors (name, email, phone) values ('exemplo', 'ex@doe.com', '123456789');
 -- DROP TABLE pets;
 -- SELECT * FROM tutors;
-SELECT * FROM pets;
+-- SELECT * FROM pets;
+-- CREATE TABLE IF NOT EXISTS products (
+--            id INTEGER PRIMARY KEY AUTOINCREMENT,
+--            name VARCHAR(150) NOT NULL,
+--            price INTEGER NOT NULL,
+--            category VARCHAR(150) NOT NULL,
+--            stock INTEGER NOT NULL
+--        )

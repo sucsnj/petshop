@@ -1,115 +1,100 @@
 const fs = require('fs');
-const localDoBanco = 'banco/tutors.json'; // local do banco de dados
+const banco = 'products';
+const db = require('../banco/database');
 
-function pegarTutores(res, next) {
-    fs.readFile(`${localDoBanco}`, (err, data) => {
+function pegarProdutos(res, next) {
+    db.all(`SELECT * FROM ${banco}`, (err, data) => {
         if (err) {
             console.error(err);
-            return next(err); // uso do next para retornar o erro > está localizado em app.js
+            return next(err);
+        } else {
+            return res.json(data);
         }
-        const endpoint = JSON.parse(data);
-        return res.json(endpoint);
     });
 }
 
-function pegarTutorPorId(req, res, next) {
+function pegarProdutoPorId(req, res, next) {
     const id = Number(req.params.id);
-    fs.readFile(`${localDoBanco}`, (err, data) => {
+    db.all(`SELECT * FROM ${banco} WHERE id = ?`, [id], (err, data) => {
         if (err) {
             console.error(err);
             return next(err);
         }
-        const endpoint = JSON.parse(data);
-        const elementoEncontrado = endpoint.find(elem => elem.id === id);
-
-        if (elementoEncontrado) {
-            return res.json(elementoEncontrado);
-        } else {
+        if (data.length === 0) {
+            console.error(err);
             return res.json('Não encontrado');
         }
+        return res.json(data);
     });
 }
 
-function criarTutor(req, res) {
-    fs.readFile(`${localDoBanco}`, 'utf8', (err, data) => {
+function criarProduto(req, res) {
+    const corpo = req.body;
+
+    for (let key in corpo) {
+        if (key.trim() === "") {
+            return res.json('Preencha todos os campos!');
+        }
+    }
+    db.run(`INSERT INTO ${banco} 
+                    (name, price, category, stock)
+                    values
+                    (?, ?, ?, ?)
+                    `, [corpo.name, corpo.price, corpo.category, corpo.stock], function (err) {
         if (err) {
             console.error(err);
-            return res.status(500).json({ error: 'Erro ao processar o arquivo' });
+            return res.status(500).json({ error: 'Erro ao inserir o elemento' });
         }
-        const endpoint = JSON.parse(data);
+        return res.json('Elemento inserido!');
+    });
+}
 
-        const idPresentes = endpoint.map(elem => elem.id); // mapeia todos os ids dentro do array
-        let id = 1;
-        while (idPresentes.includes(id)) { // enquanto encontrar um id presente, incrementa o id
-            id++;
+function atualizarProduto(req, res) {
+    const id = Number(req.params.id);
+    const corpo = req.body;
+
+    db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, row) => {
+        if (!row) {
+            return res.json('Id não encontrado.')
         }
-        const novoElemento = { // construi o novo elemento
-            id: id, // adiciona o id
-            ...req.body, // pega todos os campos do body (corpo da requisição)
-        };
 
-        endpoint.push(novoElemento);
-        fs.writeFile(`${localDoBanco}`, JSON.stringify(endpoint, null, 2), (err) => {
+        const novoCorpo = {};
+        for (let key in row) {
+            novoCorpo[key] = corpo[key] && corpo[key].trim() !== "" ? corpo[key] : row[key];
+        }
+
+        db.run(`UPDATE ${banco} 
+            SET name=?, price=?, category=?, stock=?
+            WHERE id=?`, [novoCorpo.name, novoCorpo.price, novoCorpo.category, novoCorpo.stock, id], function (err) {
             if (err) {
                 console.error(err);
-                return res.status(500).json({ error: 'Erro ao salvar os dados' });
+                return res.status(500).json({ error: 'Erro ao atualizar o elemento' });
             }
-            res.json(endpoint);
+            return res.json('Elemento atualizado!');
         });
     });
-};
+}
 
-function atualizarTutor(req, res, id) {
-    fs.readFile(`${localDoBanco}`, 'utf8', (err, data) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: 'Erro ao processar o arquivo' });
+function apagarProduto(req, res) {
+    const id = Number(req.params.id);
+    db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, rows) => {
+        if (!rows) {
+            return res.json('Id não encontrado.')
         }
-        const endpoint = JSON.parse(data);
-        const procurarElemento = endpoint.find(elem => elem.id === id);
-        if (procurarElemento) {
-            // o map procura o id do elemento e o retorna > ...elem é uma operação spread que copia todos os campos > ...req.body é a requisição
-            const elementoAtualizado = endpoint.map(elem => elem.id === id ? { ...elem, ...req.body } : elem);
-            fs.writeFile(`${localDoBanco}`, JSON.stringify(elementoAtualizado, null, 2), (err) => {
-                if (err) {
-                    console.error(err);
-                    return res.status(500).json({ error: 'Erro ao salvar os dados' });
-                }
-                res.json(elementoAtualizado);
-            });
-        } else {
-            res.status(404).json({ error: 'Elemento não encontrado' });
-        }
+        db.run(`DELETE FROM ${banco} WHERE id= ?`, [id], function (err) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Erro ao apagar o elemento' });
+            }
+            return res.json('Elemento apagado!');
+        });
     });
-};
-
-function apagarTutor(req, res, id) {
-    fs.readFile(`${localDoBanco}`, 'utf8', (err, data) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: 'Erro ao processar o arquivo' });
-        }
-        const endpoint = JSON.parse(data);
-        const procurarElemento = endpoint.find(elem => elem.id === id);
-        if (procurarElemento) {
-            const elementoAtualizado = endpoint.filter(elem => elem.id !== id);
-            fs.writeFile(`${localDoBanco}`, JSON.stringify(elementoAtualizado, null, 2), (err) => {
-                if (err) {
-                    console.error(err);
-                    return res.status(500).json({ error: 'Erro ao salvar os dados' });
-                }
-                res.json(elementoAtualizado);
-            });
-        } else {
-            res.status(404).json({ error: 'Elemento não encontrado' });
-        }
-    });
-};
+}
 
 module.exports = {
-    pegarTutores,
-    pegarTutorPorId,
-    criarTutor,
-    atualizarTutor,
-    apagarTutor
+    pegarProdutos,
+    pegarProdutoPorId,
+    criarProduto,
+    atualizarProduto,
+    apagarProduto
 };
