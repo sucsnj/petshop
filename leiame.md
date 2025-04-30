@@ -1,4 +1,4 @@
-# use o "npm install" para instalar todas as dependências ncessárias
+# use o "npm install" para instalar todas as dependências necessárias
 
 # para levantar o servidor, execute o comando "npm run start" ou "npm run dev"
 # npm run dev é para rodar o servidor em modo desenvolvimento, junto com o nodemon
@@ -30,6 +30,6 @@
 # para commitar o arquivo, use o comando "git commit -m "mensagem do commit""
 # para enviar o commit para o github, use o comando "git push origin nomeDaBranch"
 
-# para criar uma nova branch, uso o comando "git branch nomeDaBranch"
+# para criar uma nova branch, use o comando "git branch nomeDaBranch"
 # para mudar de uma branch para outra, use o comando "git checkout nomeDaBranch"
 # para mesclar uma branch com a principal, use o comando "git merge nomeDaBranch"
