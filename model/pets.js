@@ -1,110 +1,100 @@
 const fs = require('fs');
-const localDoBanco = 'banco/pets.json'; // local do banco de dados
+const banco = 'pets';
+const db = require('../banco/database');
 
 function pegarPets(res, next) {
-    fs.readFile(`${localDoBanco}`, (err, data) => {
+    db.all(`SELECT * FROM ${banco}`, (err, data) => {
         if (err) {
             console.error(err);
-            return next(err); // uso do next para retornar o erro > está localizado em app.js
+            return next(err);
+        } else {
+            return res.json(data);
         }
-        const endpoint = JSON.parse(data);
-        return res.json(endpoint);
     });
 }
 
 function pegarPetPorId(req, res, next) {
     const id = Number(req.params.id);
-    fs.readFile(`${localDoBanco}`, (err, data) => {
+    db.all(`SELECT * FROM ${banco} WHERE id = ?`, [id], (err, data) => {
         if (err) {
             console.error(err);
             return next(err);
         }
-        const endpoint = JSON.parse(data);
-        const elementoEncontrado = endpoint.find(elem => elem.id === id);
-
-        if (elementoEncontrado) {
-            return res.json(elementoEncontrado);
-        } else {
+        if (data.length === 0) {
+            console.error(err);
             return res.json('Não encontrado');
         }
+        return res.json(data);
     });
 }
 
 function criarPet(req, res) {
-    fs.readFile(`${localDoBanco}`, 'utf8', (err, data) => {
+    const corpo = req.body;
+
+    for (let key in corpo) {
+        if (key.trim() === "") {
+            return res.json('Preencha todos os campos!');
+        }
+    }
+    db.run(`INSERT INTO ${banco} 
+                    (name, species, age, tutorId)
+                    values
+                    (?, ?, ?, ?)
+                    `, [corpo.name, corpo.species, corpo.age, corpo.tutorId], function (err) {
         if (err) {
             console.error(err);
-            return res.status(500).json({ error: 'Erro ao processar o arquivo' });
+            console.log(corpo)
+            return res.status(500).json({ error: 'Erro ao inserir o elemento' });
         }
-        const endpoint = JSON.parse(data);
+        return res.json('Elemento inserido!');
+    });
+}
 
-        const idPresentes = endpoint.map(elem => elem.id); // mapeia todos os ids dentro do array
-        let id = 1;
-        while (idPresentes.includes(id)) { // enquanto encontrar um id presente, incrementa o id
-            id++;
+function atualizarPet(req, res) {
+    const id = Number(req.params.id);
+    const corpo = req.body;
+
+    db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, row) => {
+        if (!row) {
+            return res.json('Id não encontrado.')
         }
-        const novoElemento = { // construi o novo elemento
-            id: id, // adiciona o id
-            ...req.body, // pega todos os campos do body (corpo da requisição)
-        };
 
-        endpoint.push(novoElemento);
-        fs.writeFile(`${localDoBanco}`, JSON.stringify(endpoint, null, 2), (err) => {
+        const novoCorpo = {}; // cria um novo objeto para receber os dados atualizados
+        // percorre o 'row' verificando se o campo existe e se também está vazio
+        for (let key in row) {
+            novoCorpo[key] = corpo.hasOwnProperty(key) // confere a existencia do campo em 'row', no corpo da requisição
+            ? (typeof corpo[key] === "string" ? corpo[key].trim() : corpo[key]) // verifica se é uma string e tira os espaços em branco
+            : row[key]; // se não existir, mantém o valor original do 'row'
+        }
+
+        db.run(`UPDATE ${banco} 
+            SET name=?, species=?, age=?, tutorId=?
+            WHERE id=?`, [novoCorpo.name, novoCorpo.species, novoCorpo.age, novoCorpo.tutorId, id], function (err) {
             if (err) {
                 console.error(err);
-                return res.status(500).json({ error: 'Erro ao salvar os dados' });
+                return res.status(500).json({ error: 'Erro ao atualizar o elemento' });
             }
-            res.json(endpoint);
+            return res.json('Elemento atualizado!');
         });
     });
-};
+}
 
-function atualizarPet(req, res, id) {
-    fs.readFile(`${localDoBanco}`, 'utf8', (err, data) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: 'Erro ao processar o arquivo' });
-        }
-        const endpoint = JSON.parse(data);
-        const procurarElemento = endpoint.find(elem => elem.id === id);
-        if (procurarElemento) {
-            // o map procura o id do elemento e o retorna > ...elem é uma operação spread que copia todos os campos > ...req.body é a requisição
-            const elementoAtualizado = endpoint.map(elem => elem.id === id ? { ...elem, ...req.body } : elem);
-            fs.writeFile(`${localDoBanco}`, JSON.stringify(elementoAtualizado, null, 2), (err) => {
-                if (err) {
-                    console.error(err);
-                    return res.status(500).json({ error: 'Erro ao salvar os dados' });
-                }
-                res.json(elementoAtualizado);
-            });
-        } else {
-            res.status(404).json({ error: 'Elemento não encontrado' });
-        }
-    });
-};
+function apagarPet(req, res) {
+    const id = Number(req.params.id);
 
-function apagarPet(req, res, id) {
-    fs.readFile(`${localDoBanco}`, 'utf8', (err, data) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: 'Erro ao processar o arquivo' });
+    db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, rows) => {
+        if (!rows) {
+            return res.json('Id não encontrado.')
         }
-        const endpoint = JSON.parse(data);
-        const procurarElemento = endpoint.find(elem => elem.id === id);
-        if (procurarElemento) {
-            const elementoAtualizado = endpoint.filter(elem => elem.id !== id);
-            fs.writeFile(`${localDoBanco}`, JSON.stringify(elementoAtualizado, null, 2), (err) => {
-                if (err) {
-                    console.error(err);
-                    return res.status(500).json({ error: 'Erro ao salvar os dados' });
-                }
-                res.json(elementoAtualizado);
-            });
-        } else {
-            res.status(404).json({ error: 'Elemento não encontrado' });
-        }
+        db.run(`DELETE FROM ${banco} WHERE id= ?`, [id], function (err) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Erro ao apagar o elemento' });
+            }
+            return res.json('Elemento apagado!');
+        });
     });
-};
+}
 
 module.exports = {
     pegarPets,

@@ -60,7 +60,7 @@ function atualizarProduto(req, res) {
 
         const novoCorpo = {};
         for (let key in row) {
-            novoCorpo[key] = corpo[key] && corpo[key].trim() !== "" ? corpo[key] : row[key];
+            novoCorpo[key] = corpo.hasOwnProperty(key) ? (typeof corpo[key] === "string" ? corpo[key].trim() : corpo[key]) : row[key];
         }
 
         db.run(`UPDATE ${banco} 
