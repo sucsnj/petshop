@@ -33,3 +33,5 @@
 # para criar uma nova branch, use o comando "git branch nomeDaBranch"
 # para mudar de uma branch para outra, use o comando "git checkout nomeDaBranch"
 # para mesclar uma branch com a principal, use o comando "git merge nomeDaBranch"
+
+# para subir a mesclagem das branchs, use o comando "git push"
