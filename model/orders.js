@@ -243,10 +243,45 @@ function atualizarPedido(req, res) {
     });
 }
 
+function apagarPedido(req, res) {
+    const id = Number(req.params.id);
+
+    db.get(`SELECT * FROM ${banco} WHERE id=?`, [id], (err, row) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Erro ao buscar o pedido' });
+        }
+        if (!row) {
+            return res.status(404).json('Id não encontrado');
+        }
+        // código caso encontre o pedido
+
+        db.run(`DELETE FROM ${order_products} WHERE orderId=?`, [id], (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Erro ao remover produtos antigos' });
+            }
+        });
+        db.run(`DELETE FROM ${order_services} WHERE orderId=?`, [id], (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Erro ao remover serviços antigos' });
+            }
+        });
+        db.run(`DELETE FROM ${banco} WHERE id=?`, [id], function (err) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Erro ao remover o pedido' });
+            }
+            return res.json('Pedido removido com sucesso!');
+        });
+    });
+}
+
 module.exports = {
     pegarPedidos,
     pegarPedidoPorId,
     criarPedido,
     atualizarPedido,
-    // apagarPedido
+    apagarPedido
 };
