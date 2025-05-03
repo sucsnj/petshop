@@ -35,3 +35,8 @@
 # para mesclar uma branch com a principal, use o comando "git merge nomeDaBranch"
 
 # para subir a mesclagem das branchs, use o comando "git push"
+
+# para recuperar uma branch, use o comando "git checkout nomeDaBranch"
+# use o comando "git pull origin nomeDaBranch" para atualizar a branch
+
+# se houver conflitos, use o comando "git reset --hard" para reverter as alterações
