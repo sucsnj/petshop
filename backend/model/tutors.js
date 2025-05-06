@@ -95,16 +95,28 @@ function atualizarTutor(req, res) {
 
 function apagarTutor(req, res) {
     const id = Number(req.params.id);
-    db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, rows) => {
-        if (!rows) {
-            return res.json('Id não encontrado.')
+
+    // verifica se tem pets associados
+    db.all(`SELECT * FROM pets WHERE tutorId = ?`, [id], (err, rows) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Erro ao verificar tabela' });
         }
-        db.run(`DELETE FROM ${banco} WHERE id= ?`, [id], function (err) {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({ error: 'Erro ao apagar o elemento' });
+        if (rows.length !== 0) {
+            return res.status(400).json({ success: false, message: "Não é possível deletar um tutor que tenha pets associados!" });
+        }
+
+        db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, rows) => {
+            if (!rows) {
+                return res.json('Id não encontrado.')
             }
-            return res.json('Elemento apagado!');
+            db.run(`DELETE FROM ${banco} WHERE id= ?`, [id], function (err) {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Erro ao apagar o elemento' });
+                }
+                return res.json('Elemento apagado!');
+            });
         });
     });
 }

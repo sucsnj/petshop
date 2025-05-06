@@ -7,37 +7,46 @@ let servId; // determina qual serviço está sendo editado // TODO criar array c
 let editar; // determina se o usuário está editando ou não
 let tab; // determina qual tela será exibida
 
-$(document).ready(function () {
-    console.log("jQuery está funcionando!");
-    tab = 1;
-    telaInicial();
+let route = window.location.pathname.split("/")[1]; // determina qual rota será utilizada
 
-    $("#tab_pet").on('click', function () { // muda para tela de pets conforme clicar em uma das tabs
-        tab = 1;
-        telaInicial();
-    })
-    $("#tab_tutor").on('click', function () { // muda para tela de tutores conforme clicar em uma das tabs
-        tab = 2;
-        telaInicial();
-    })
-    $("#tab_produto").on('click', function () {
-        tab = 3;
-        telaInicial();
-    })
-    $("#tab_servico").on('click', function () {
-        tab = 4;
-        telaInicial();
-    })
-    $("#tab_pedido").on('click', function () {
-        tab = 5;
-        telaInicial();
-    })
+$(window).on('load', function () {
+    telaDeCarregamento(800);
+    tab = 0
+
+    const routes = {
+        index: () => {
+            tab = 0;
+        },
+        pets: () => {
+            tab = 1;
+            telaInicial();
+        },
+        tutors: () => {
+            tab = 2;
+            telaInicial();
+        },
+        products: () => {
+            tab = 3;
+            telaInicial();
+        },
+        services: () => {
+            tab = 4;
+            telaInicial();
+        },
+        orders: () => {
+            tab = 5;
+            telaInicial();
+        }
+    }
+
+    if (route in routes) {
+        routes[route]();
+    }
 })
 
 // botões do pet
 $("#btn_novoPet").on('click', function () { // tela para adicionar um novo pet
     menuAdd(`petForm`);
-    console.log("jQuery está funcionando!");
 })
 $("#btn_salvarPet").on('click', function () { // tela para salvar um pet
     if (editar) { // verifica se é uma edição ou um novo pet
@@ -115,6 +124,14 @@ $("#btn_voltarServico").on('click', function () { // voltar para a tela de servi
     }
 })
 
+// botões do pedido
+
+// botão de janela de alerta
+$("#fecharJanelaAlerta").on('click', function () {
+    $("#bloqueioDeFundo").css("display", "none");
+    $("#janelaAlerta").css("display", "none");
+})
+
 // começo das funções
 
 function pegarForm(formulario) { // retorna um objeto com os valores do formulario
@@ -184,11 +201,6 @@ function removerAttrRequired(formulario) { // remove o atributo required de todo
 
 function ativarClassesDeInputPreencher(element, value) { // ativa as classes de input
     $(element).val(value).addClass('valid').siblings('label').addClass('active');
-}
-
-async function embed(endpoint, id, cEndpoint) { // faz um embed de tutor para pets
-    const res = await fetch(url + `${endpoint}/${id}` + `?_embed=${cEndpoint}`); // faz um GET com embed
-    return data = await res.json();
 }
 
 function menuAdd(formulario) { // menu de adição
@@ -281,33 +293,33 @@ function atualizarPorId(id, endpoint, form) { // faz um PATCH
     })
 }
 
-function deletarPorId(endpoint, id) { // faz um DELETE
-    embed(`${endpoint}`, id, `pets`) // faz um embed de tutor para pets
-        .then((data) => {
-            if (tab == 2 && data.pets.length !== 0) { // se estiver em tutor e o tutor tiver pets
-                return alert("Não é possível deletar um tutor que tenha pets associados!"); // caso tenha pets, não pode deletar
-            } else { // executa o código do DELETE
-                if (confirm("Deseja deletar?")) {
-                    fetch(url + endpoint + id, {
-                        method: 'DELETE'
-                    })
-                        .then(() => {
+function deletarPorId(endpoint, id) {
+    if (!confirm("Deseja deletar?")) return; // Confirmação antes da requisição
 
-                            const executar = {
-                                1: () => listaPet(),
-                                2: () => listaDinamica(`tutors/`, `tutor_list`, listaTutor),
-                                3: () => listaDinamica(`products/`, `produto_list`, listaProduto),
-                                4: () => listaDinamica(`services`, `servico_list`, listaServico),
-                            };
+    fetch(url + endpoint + id, { method: 'DELETE' })
+        .then(res => res.json()) // Converte a resposta para JSON
+        .then(data => {
+            if (tab === 2 && data.message) {
+                alert(data.message); // Se for "tutors", exibe a mensagem do backend
+                return;
+            }
 
-                            if (executar[tab]) {
-                                executar[tab]();
-                            }
-                        })
-                }
+            // Independente do endpoint, recarrega os dados
+            const executar = {
+                1: () => listaPet(),
+                2: () => listaDinamica(`tutors/`, `tutor_list`, listaTutor),
+                3: () => listaDinamica(`products/`, `produto_list`, listaProduto),
+                4: () => listaDinamica(`services/`, `servico_list`, listaServico),
+            };
+
+            if (executar[tab]) {
+                executar[tab]();
             }
         })
+        .catch(error => console.error("Erro ao excluir:", error)); // Captura erros inesperados
 }
+
+
 
 function telaInicial() { // exibe a tela inicial
     const removerRequired = [ // elementos que terão seus atributos required removidos
@@ -316,7 +328,7 @@ function telaInicial() { // exibe a tela inicial
         `produtoForm`,
         `servicoForm`,
     ];
-    removerRequired.forEach(item => removerAttrRequired(item));
+    // removerRequired.forEach(item => removerAttrRequired(item)); TODO
 
     const executar = { // executa a função correspondente ao valor de tab
         1: () => { // se tab for 1, executa as funções abaixo
@@ -465,4 +477,18 @@ function listaServico(data) { // carrega a lista de serviços
                         </td>
                     </tr>`
     return lista;
+}
+
+function janelaAlerta(titulo, mensagem) {
+    $("#tituloAlerta").html(titulo);
+    $("#mensagemAlerta").html(mensagem);
+    $("#bloqueioDeFundo").css("display", "block");
+    $("#janelaAlerta").css("display", "block");
+}
+
+function telaDeCarregamento(tempo) {
+    setTimeout(function () {
+        $("#loading").css("display", "none");
+        $("#content").css("display", "block");
+    }, tempo);
 }
