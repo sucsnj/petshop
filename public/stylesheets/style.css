@@ -6,3 +6,68 @@ body {
 a {
   color: #00B7FF;
 }
+
+/* altura da navbar para evitar que o conteúdo fique escondido */
+.navbar-fixed-top {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+body {
+  padding-top: 64px; 
+}
+
+/* espaço entre navbar e tabs */
+.tab-center {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 5px; 
+}
+
+.tab-center .tab {
+  flex: 1 1 20%;
+  text-align: center;
+}
+
+.tabs .tab a {
+  color: #2196f3;
+}
+
+.tabs .tab a.active {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+
+/* Garantir que a navbar ocupe 100% da largura */
+nav {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+/* Garantir que os itens da navbar fiquem no topo e se estendam corretamente */
+.nav-wrapper {
+  width: 100%;
+}
+
+/* Ajustar a largura das abas para ocupar 100% da tela */
+.tabs {
+  display: flex;
+  justify-content: center;
+  border-bottom: 2px solid #ddd;
+}
+
+.tabs .tab {
+  flex: 1;
+  text-align: center;
+}
+
+.tabs .tab a {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}

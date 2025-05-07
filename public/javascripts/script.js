@@ -284,7 +284,7 @@ function atualizarPorId(id, endpoint, form) { // faz um PATCH
 function deletarPorId(endpoint, id) { // faz um DELETE
     embed(`${endpoint}`, id, `pets`) // faz um embed de tutor para pets
         .then((data) => {
-            if (tab == 2 && data.pets.length !== 0) { // se estiver em tutor e o tutor tiver pets
+            if (tab == 2 && data && Array.isArray(data.pets) && data.pets.length !== 0) { // se estiver em tutor e o tutor tiver pets
                 return alert("Não é possível deletar um tutor que tenha pets associados!"); // caso tenha pets, não pode deletar
             } else { // executa o código do DELETE
                 if (confirm("Deseja deletar?")) {
