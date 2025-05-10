@@ -1,5 +1,3 @@
-const url = 'https://c2j8xrl2-3000.brs.devtunnels.ms/';
-
 let petId; // determina qual pet está sendo editado
 let tutorId; // determina qual tutor está sendo editado
 let prodId; // determina qual produto está sendo editado

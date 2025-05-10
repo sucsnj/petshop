@@ -1,9 +1,8 @@
-const fs = require('fs');
-const banco = 'pets';
 const db = require('../banco/database');
+const tabela = 'pets';
 
 function pegarPets(res, next) {
-    db.all(`SELECT * FROM ${banco}`, (err, data) => {
+    db.all(`SELECT * FROM ${tabela}`, (err, data) => {
         if (err) {
             console.error(err);
             return next(err);
@@ -15,7 +14,7 @@ function pegarPets(res, next) {
 
 function pegarPetPorId(req, res, next) {
     const id = Number(req.params.id);
-    db.all(`SELECT * FROM ${banco} WHERE id = ?`, [id], (err, data) => {
+    db.all(`SELECT * FROM ${tabela} WHERE id = ?`, [id], (err, data) => {
         if (err) {
             console.error(err);
             return next(err);
@@ -36,7 +35,7 @@ function criarPet(req, res) {
             return res.json('Preencha todos os campos!');
         }
     }
-    db.run(`INSERT INTO ${banco} 
+    db.run(`INSERT INTO ${tabela} 
                     (name, species, age, tutorId)
                     values
                     (?, ?, ?, ?)
@@ -54,7 +53,7 @@ function atualizarPet(req, res) {
     const id = Number(req.params.id);
     const corpo = req.body;
 
-    db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, row) => {
+    db.get(`SELECT * FROM ${tabela} WHERE id= ?`, [id], (err, row) => {
         if (!row) {
             return res.json('Id não encontrado.')
         }
@@ -67,7 +66,7 @@ function atualizarPet(req, res) {
             : row[key]; // se não existir, mantém o valor original do 'row'
         }
 
-        db.run(`UPDATE ${banco} 
+        db.run(`UPDATE ${tabela} 
             SET name=?, species=?, age=?, tutorId=?
             WHERE id=?`, [novoCorpo.name, novoCorpo.species, novoCorpo.age, novoCorpo.tutorId, id], function (err) {
             if (err) {
@@ -82,11 +81,11 @@ function atualizarPet(req, res) {
 function apagarPet(req, res) {
     const id = Number(req.params.id);
 
-    db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, rows) => {
+    db.get(`SELECT * FROM ${tabela} WHERE id= ?`, [id], (err, rows) => {
         if (!rows) {
             return res.json('Id não encontrado.')
         }
-        db.run(`DELETE FROM ${banco} WHERE id= ?`, [id], function (err) {
+        db.run(`DELETE FROM ${tabela} WHERE id= ?`, [id], function (err) {
             if (err) {
                 console.error(err);
                 return res.status(500).json({ error: 'Erro ao apagar o elemento' });

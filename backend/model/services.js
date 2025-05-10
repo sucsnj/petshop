@@ -1,9 +1,8 @@
-const fs = require('fs');
-const banco = 'services';
 const db = require('../banco/database');
+const tabela = 'services';
 
 function pegarServicos(res, next) {
-    db.all(`SELECT * FROM ${banco}`, (err, data) => {
+    db.all(`SELECT * FROM ${tabela}`, (err, data) => {
         if (err) {
             console.error(err);
             return next(err);
@@ -15,7 +14,7 @@ function pegarServicos(res, next) {
 
 function pegarServicoPorId(req, res, next) {
     const id = Number(req.params.id);
-    db.all(`SELECT * FROM ${banco} WHERE id = ?`, [id], (err, data) => {
+    db.all(`SELECT * FROM ${tabela} WHERE id = ?`, [id], (err, data) => {
         if (err) {
             console.error(err);
             return next(err);
@@ -36,7 +35,7 @@ function criarServico(req, res) {
             return res.json('Preencha todos os campos!');
         }
     }
-    db.run(`INSERT INTO ${banco} 
+    db.run(`INSERT INTO ${tabela} 
                     (name, price, duration, description)
                     values
                     (?, ?, ?, ?)
@@ -53,7 +52,7 @@ function atualizarServico(req, res) {
     const id = Number(req.params.id);
     const corpo = req.body;
 
-    db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, row) => {
+    db.get(`SELECT * FROM ${tabela} WHERE id= ?`, [id], (err, row) => {
         if (!row) {
             return res.json('Id não encontrado.')
         }
@@ -63,7 +62,7 @@ function atualizarServico(req, res) {
             novoCorpo[key] = corpo.hasOwnProperty(key) ? (typeof corpo[key] === "string" ? corpo[key].trim() : corpo[key]) : row[key];
         }
 
-        db.run(`UPDATE ${banco} 
+        db.run(`UPDATE ${tabela} 
             SET name=?, price=?, duration=?, description=?
             WHERE id=?`, [novoCorpo.name, novoCorpo.price, novoCorpo.duration, novoCorpo.description, id], function (err) {
             if (err) {
@@ -77,11 +76,11 @@ function atualizarServico(req, res) {
 
 function apagarServico(req, res) {
     const id = Number(req.params.id);
-    db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, rows) => {
+    db.get(`SELECT * FROM ${tabela} WHERE id= ?`, [id], (err, rows) => {
         if (!rows) {
             return res.json('Id não encontrado.')
         }
-        db.run(`DELETE FROM ${banco} WHERE id= ?`, [id], function (err) {
+        db.run(`DELETE FROM ${tabela} WHERE id= ?`, [id], function (err) {
             if (err) {
                 console.error(err);
                 return res.status(500).json({ error: 'Erro ao apagar o elemento' });

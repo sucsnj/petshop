@@ -1,8 +1,7 @@
-const fs = require('fs');
-const banco = 'orders';
+const db = require('../banco/database');
+const tabela = 'orders';
 const order_products = 'order_products';
 const order_services = 'order_services';
-const db = require('../banco/database');
 
 function pegarPedidos(res, next) {
     db.all(`
@@ -16,7 +15,7 @@ function pegarPedidos(res, next) {
             serv.quantidadeServico,
             orders.total AS total,
             orders.status AS status
-        FROM ${banco} AS orders
+        FROM ${tabela} AS orders
         LEFT JOIN tutors ON tutors.id = orders.tutorId
         LEFT JOIN pets ON pets.id = orders.petId
         LEFT JOIN (
@@ -58,7 +57,7 @@ function pegarPedidoPorId(req, res, next) {
             orders.total AS total,
             orders.status AS status
         FROM
-            ${banco} AS orders
+            ${tabela} AS orders
         JOIN
             tutors ON tutors.id = orders.tutorId
         JOIN
@@ -93,7 +92,7 @@ function criarPedido(req, res) {
         }
     }
 
-    db.run(`INSERT INTO ${banco} 
+    db.run(`INSERT INTO ${tabela} 
                     (tutorId, petId, products, services, total, status)
                     values
                     (?, ?, ?, ?, ?, ?)
@@ -154,7 +153,7 @@ function atualizarPedido(req, res) {
     const corpo = req.body;
 
     // recupera o pedido com base no id
-    db.get(`SELECT * FROM ${banco} WHERE id= ?`, [id], (err, row) => {
+    db.get(`SELECT * FROM ${tabela} WHERE id= ?`, [id], (err, row) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ error: 'Erro ao buscar o pedido' });
@@ -173,7 +172,7 @@ function atualizarPedido(req, res) {
         };
 
         // atualiza o pedido com base nas informações de novoCorpo (menos produtos e serviços)
-        db.run(`UPDATE ${banco} 
+        db.run(`UPDATE ${tabela} 
             SET tutorId=?, petId=?, total=?, status=?
             WHERE id=?`, [novoCorpo.tutorId, novoCorpo.petId, novoCorpo.total, novoCorpo.status, id], function (err) {
             if (err) {
@@ -246,7 +245,7 @@ function atualizarPedido(req, res) {
 function apagarPedido(req, res) {
     const id = Number(req.params.id);
 
-    db.get(`SELECT * FROM ${banco} WHERE id=?`, [id], (err, row) => {
+    db.get(`SELECT * FROM ${tabela} WHERE id=?`, [id], (err, row) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ error: 'Erro ao buscar o pedido' });
@@ -268,7 +267,7 @@ function apagarPedido(req, res) {
                 return res.status(500).json({ error: 'Erro ao remover serviços antigos' });
             }
         });
-        db.run(`DELETE FROM ${banco} WHERE id=?`, [id], function (err) {
+        db.run(`DELETE FROM ${tabela} WHERE id=?`, [id], function (err) {
             if (err) {
                 console.error(err);
                 return res.status(500).json({ error: 'Erro ao remover o pedido' });
