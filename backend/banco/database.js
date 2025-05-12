@@ -73,10 +73,12 @@ db.serialize(() => {
 
 db.serialize(() => {
     db.run(
-        `CREATE TABLE IF NOT EXISTS order_products (
+        `CREATE TABLE IF NOT EXISTS order_product (
             orderId INTEGER NOT NULL REFERENCES orders(id),
             productId INTEGER NOT NULL REFERENCES products(id),
-            quantidade INTEGER NOT NULL,
+            prodQtd INTEGER NOT NULL,
+            prodPrice REAL NOT NULL,
+            prodTotal REAL GENERATED ALWAYS AS (prodQtd * prodPrice) STORED,
             PRIMARY KEY (orderId, productId)
        )`, (err) => {
         if (err) {
@@ -88,10 +90,12 @@ db.serialize(() => {
 
 db.serialize(() => {
     db.run(
-        `CREATE TABLE IF NOT EXISTS order_services (
+        `CREATE TABLE IF NOT EXISTS order_service (
             orderId INTEGER NOT NULL REFERENCES orders(id),
             serviceId INTEGER NOT NULL REFERENCES services(id),
-            quantidade INTEGER NOT NULL,
+            servQtd INTEGER NOT NULL,
+            servPrice REAL NOT NULL,
+            servTotal REAL GENERATED ALWAYS AS (servQtd * servPrice) STORED,
             PRIMARY KEY (orderId, serviceId)
        )`, (err) => {
         if (err) {
@@ -106,7 +110,7 @@ db.serialize(() => {
         `CREATE TABLE IF NOT EXISTS orders (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             tutorId INTEGER NOT NULL REFERENCES tutors(id),
-            petId INTEGER NOT NULL REFERENCES pets(id),
+            petId INTEGER REFERENCES pets(id),
             products TEXT,
             services TEXT,
             total REAL NOT NULL,
