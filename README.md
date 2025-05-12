@@ -11,6 +11,7 @@ Abaixo estão as instruções para instalação, execução e manutenção do pr
 
 ### Instruções de instalação e execução
 > use o comando `cd backend` ou `cd frontend` para navegar para a pasta correspondente (estando na pasta do projeto)
+
 navegue até a pasta `backend` e execute o comando `npm install` ou `npm i` para instalar todas as dependências necessárias do backend
 
 navegue até a pasta `frontend` e execute o comando `npm install` ou `npm i` para instalar todas as dependências necessárias do frontend
@@ -53,6 +54,7 @@ para inicializar o projeto, use o comando `git init`
 
 verifique o email com o comando `git config --global user.email`
 > Obs: para inserir o email do github, use o comando `git config --global user.email seuemail@email.com`
+
 verifique o nome com o comando `git config --global user.name`
 > Obs: para inserir o nome do github, use o comando `git config --global user.name seunome`
 
@@ -79,11 +81,12 @@ se houver conflitos, use o comando `git reset --hard` para reverter as alteraç�
 
 ### Configuração do ambiente (.env)
 > para criar o arquivo `.env`, use o comando `touch .env`
+
 veja o arquivo `env.example` para saber quais os campos que devem ser preenchidos, e como preenchê-los
 
 não use `;` para separar os campos ou finalizar linhas
 
-não aspas de qualquer natureza para os campos
+não use aspas de qualquer natureza para os campos
 > environment: o arquivo `.env` deve estar nas pastas `backend` e `frontend`
 
 ### Usando o Swagger
