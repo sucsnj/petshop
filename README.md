@@ -92,3 +92,55 @@ não use aspas de qualquer natureza para os campos
 ### Usando o Swagger
 o swagger está disponível em `http://localhost:4000/api-docs`
 > Obs: O servidor deve estar rodando para que o swagger funcione
+
+## Estrututa do projeto
+### Backend
+📂 `banco/` → Configuração e inicialização do banco de dados.
+
+📂 `bin/` → Scripts de inicialização da aplicação.
+
+📂 `model/` → Lógica do CRUD e interação com o banco de dados.
+
+📂 `routes/` → Definição das rotas e chamadas das funções do CRUD.
+
+📂 `views/` → Arquivos de visualização da homepage da API, como HTML (EJS).
+
+⚙️ `.env` → Arquivo de configuração do ambiente.
+
+🔍 `.gitignore` → Arquivo de configuração do git.
+
+⚙️ `app.js` → Arquivo de configuração do servidor.
+
+📑 `consultas.sql` → Arquivo de consultas do banco de dados. `(opcional)`
+
+📑 `database.sqlite` → Banco de dados do frontend.
+
+⚙️ `env.example` → Exemplo de arquivo de configuração do ambiente. `(opcional)`
+
+⚙️ `package-lock.json` → Arquivo de configuração do pacote.
+
+⚙️ `package.json` → Arquivo de configuração do pacote.
+
+### Frontend
+📂 `bin/` → Scripts de inicialização da aplicação.
+
+📂 `public/` → Arquivos estaticos do frontend, como CSS e JS, contêm o Materialize.
+
+📂 `routes/` → Definição das rotas e chamadas das funções do CRUD.
+
+📂 `views/` → Arquivos do frontend, como HTML (EJS), JS e CSS.
+
+⚙️ `.env` → Arquivo de configuração do ambiente.
+
+🔍 `.gitignore` → Arquivo de configuração do git.
+
+⚙️ `app.js` → Arquivo de configuração do servidor.
+
+⚙️ `env.example` → Exemplo de arquivo de configuração do ambiente. `(opcional)`
+
+⚙️ `package-lock.json` → Arquivo de configuração do pacote.
+
+⚙️ `package.json` → Arquivo de configuração do pacote.
+
+### readme.md
+📜 `README.md` → Arquivo de documentação do projeto.
