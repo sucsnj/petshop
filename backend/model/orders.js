@@ -61,24 +61,35 @@ function pegarPedidoPorId(req, res, next) {
             orders.tutorId AS tutorId,
             orders.petId AS petId,
             orders.products AS productIds,
-            orders.services AS serviceIds,
-            orders.total AS total,
-            orders.status AS status,
             prod.prodQtds,
             prod.prodPrices,
-            prod.prodTotals
+            prod.prodTotals,
+            orders.services AS serviceIds,
+            serv.servQtds,
+            serv.servPrices,
+            serv.servTotals,
+            orders.total AS total,
+            orders.status AS status
         FROM ${tabela}
         LEFT JOIN tutors ON tutors.id = orders.tutorId
         LEFT JOIN pets ON pets.id = orders.petId
         LEFT JOIN (
-            SELECT order_product.orderId, 
+            SELECT ${order_product}.orderId, 
                 GROUP_CONCAT(prodQtd) AS prodQtds,
                 GROUP_CONCAT(prodPrice) AS prodPrices,
                 GROUP_CONCAT(prodTotal) AS prodTotals
-            FROM order_product
-            GROUP BY order_product.orderId
+            FROM ${order_product}
+            GROUP BY ${order_product}.orderId
         ) AS prod ON prod.orderId = orders.id
-        WHERE orders.id = ?
+        LEFT JOIN (
+            SELECT ${order_service}.orderId, 
+                GROUP_CONCAT(servQtd) AS servQtds,
+                GROUP_CONCAT(servPrice) AS servPrices,
+                GROUP_CONCAT(servTotal) AS servTotals
+            FROM ${order_service}
+            GROUP BY ${order_service}.orderId
+        ) AS serv ON serv.orderId = orders.id
+         WHERE orders.id = ?;
         GROUP BY orders.id, tutors.id, pets.id, orders.total, orders.status;
     `, [id], [], (err, data) => {
         if (err) {
@@ -288,6 +299,14 @@ function atualizarPedido(req, res) {
                         VALUES (?, ?, ?, ?)`, [id, serviceId, quantidade, price], (err) => {
                         if (err) return console.error(err);
                     });
+                    setTimeout(() => {
+                        db.run(`UPDATE ${tabela} SET total =(
+                    (SELECT COALESCE(SUM(prodTotal), 0) FROM ${order_product} WHERE orderId = ?) +
+                    (SELECT COALESCE(SUM(servTotal), 0) FROM ${order_service} WHERE orderId = ?))
+                    WHERE id = ?`, [id, id, id], (err) => {
+                            console.log('chegou aqui');
+                        });
+                    }, 500);
                 });
             });
         });

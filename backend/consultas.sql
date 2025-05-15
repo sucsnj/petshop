@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS users;
 
 -- INSERT INTO order_product (orderId, productId, prodQtd, prodPrice) values (1, 1, 1, 10);
 -- INSERT INTO order_product (orderId, productId, prodQtd, prodPrice) values (1, 2, 2, 20);
--- INSERT INTO order_service (orderId, serviceId, servQtd, servPrice) values (1, 1, 1, 50);
+-- INSERT INTO order_service (orderId, serviceId, servQtd, servPrice) values (1, 1, 2, 100);
 
 -- INSERT INTO order_product (orderId, productId, prodQtd, prodPrice) values (2, 2, 2, 20);
 -- INSERT INTO order_service (orderId, serviceId, servQtd, servPrice) values (2, 1, 2, 50);
