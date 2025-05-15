@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 const {
   pegarTutores,
   pegarTutorPorId,
@@ -8,6 +7,7 @@ const {
   atualizarTutor,
   apagarTutor
 } = require('../model/tutors');
+const autenticarToken = require('../middleware/auth'); // Importa a proteção por token
 
 /**
  * @swagger

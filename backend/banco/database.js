@@ -123,4 +123,17 @@ db.serialize(() => {
     });
 });
 
+db.serialize(() => {
+    db.run(`CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL
+    )`, (err) => {
+        if (err) {
+            throw new Error(`Erro ao criar tabela de usuários: ${err.message}`);
+        }
+        console.log('Tabela de usuários criada ou já existe.');
+    });
+});
+
 module.exports = db;

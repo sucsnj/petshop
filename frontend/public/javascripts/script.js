@@ -2,8 +2,17 @@ import { vars } from './vars.js';
 import { tools } from './tools.js';
 import { start } from './start.js';
 import { buttons } from './buttons.js';
+import { auth } from './login.js';
 
 $(window).on('load', function () {
+
+    const token = localStorage.getItem('token'); // Obtém o token armazenado
+    if (!token && vars.route == 'dashboard') { // se o usuário estiver na tela de logout sem um token, redireciona para a tela de login
+        window.location.href = '/login';
+    }
+    if (vars.route === 'login') {
+        auth.login(); // Executa a lógica de login apenas na página de login
+    }
 
     tools.telaDeCarregamento(800); // tela de loading
     vars.tab = 0

@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 const {
   pegarPedidos,
   pegarPedidoPorId,
@@ -8,6 +7,7 @@ const {
   atualizarPedido,
   apagarPedido
 } = require('../model/orders');
+const autenticarToken = require('../middleware/auth'); // Importa a proteção por token
 
 /**
  * @swagger

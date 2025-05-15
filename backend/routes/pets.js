@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
 const {
   pegarPets,
   pegarPetPorId,
@@ -8,6 +7,7 @@ const {
   atualizarPet,
   apagarPet
 } = require('../model/pets');
+const autenticarToken = require('../middleware/auth'); // Importa a proteção por token
 
 /**
  * @swagger
@@ -110,7 +110,7 @@ router.get('/:id', function (req, res, next) {
  *       400:
  *         description: Dados inválidos
  */
-router.post('/', (req, res) => {
+router.post('/', autenticarToken, (req, res) => {
   criarPet(req, res);
 });
 
@@ -149,7 +149,7 @@ router.post('/', (req, res) => {
  *       404:
  *         description: Pet não encontrado
  */
-router.patch('/:id', (req, res) => {
+router.patch('/:id', autenticarToken, (req, res) => {
   const id = Number(req.params.id);
   atualizarPet(req, res, id);
 });
@@ -174,7 +174,7 @@ router.patch('/:id', (req, res) => {
  *       404:
  *         description: Pet não encontrado
  */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', autenticarToken, (req, res) => {
   const id = Number(req.params.id); // recebe o id (como string) do tutor a ser deletado e converte para numero
   apagarPet(req, res, id);
 });
