@@ -8,6 +8,7 @@ function telaInicial() { // exibe a tela inicial
         `tutorForm`,
         `produtoForm`,
         `servicoForm`,
+
     ];
     removerRequired.forEach(item => tools.removerAttrRequired(item)); // executa a função removerAttrRequired() para cada item do array
 
@@ -37,10 +38,10 @@ function telaInicial() { // exibe a tela inicial
             $("#table_servico").show();
         },
         5: () => { // TODO implentar pedidos
-            // tools.listaDinamica(`orders/`, `pedido_list`, lists.listaPedido);
-            // $("#pedidoForm").hide();
-            // $("#btn_novoPedido").show();
-            // $("#table_pedido").show();
+            tools.listaDinamica(`orders/`, `pedido_list`, lists.listaPedido);
+            $("#pedidoForm").hide();
+            $("#btn_novoPedido").show();
+            $("#table_pedido").show();
         },
     };
 

@@ -25,10 +25,12 @@ function menuEdit(id, form, endpoint) { // menu de edição, está sendo chamado
         `#table_tutor`,
         `#table_produto`,
         `#table_servico`,
+        `#table_pedido`,
         `#btn_novoPet`,
         `#btn_novoTutor`,
         `#btn_novoProduto`,
         `#btn_novoServico`,
+        `#btn_novoPedido`,
     ];
     esconder.forEach(item => $(item).hide()) // faz um for dentro de 'esconder' para aplicar hide() em tudo que encontrar 
     // > 'item' é o equivalente a qualquer item dentro de 'esconder'
@@ -52,6 +54,7 @@ function menuEdit(id, form, endpoint) { // menu de edição, está sendo chamado
                 tutorForm: () => { vars.tutorId = id },
                 produtoForm: () => { vars.prodId = id },
                 servicoForm: () => { vars.servId = id },
+                pedidoForm: () => { vars.prodId = id },
             }
             if (ids[form]) {
                 ids[form](); // chama a função correspondente ao form dentro de 'ids'
@@ -68,7 +71,11 @@ async function carregar(endpoint) { // faz um GET e ordena alfabeticamente >> us
     const res = await fetch(url + endpoint) // equivalente fetch(url + endpoint)
     const data = await res.json() // equivalente a then(res => res.json())
 
-    return data.sort((a, b) => a.name.localeCompare(b.name)); // ordena alfabeticamente
+    if (endpoint == `orders/`) {
+        return data;
+    } else {
+        return data.sort((a, b) => a.name.localeCompare(b.name));
+    }
 }
 
 function gravar(endpoint, form) { // faz um POST
