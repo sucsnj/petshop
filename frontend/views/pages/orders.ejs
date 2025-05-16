@@ -1,30 +1,49 @@
-<div id="petMenu" class="container">
+<div id="pedidoMenu" class="container">
     <div class="row">
+        <h1 style="font-size: 24px;">Digite aqui o seu pedido!</h1>
+
         <div class="col s3">
-            <a id="btn_novoPet" class="waves-effect waves-light btn">Novo</a>
+            <a id="btn_novoPedido" class="waves-effect waves-light btn">Novo</a>
         </div>
 
-        <form id="petForm" class="col s12">
+        <form id="pedidoForm" class="col s12">
             <div class="row">
+
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">person</i>
+                    <input id="cliente" name="cliente" type="text" class="validate" data-label="Nome do Pet">
+                    <label for="cliente">Cliente</label>
+                </div>
+
                 <div class="input-field col s6">
                     <i class="material-icons prefix">pets</i>
-                    <input id="name" name="name" type="text" class="validate" data-label="Nome do Pet">
+                    <input id="pet" name="pet" type="text" class="validate" data-label="Nome do Pet">
                     <label for="name">Nome do Pet</label>
                 </div>
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">android</i>
-                    <input id="species" name="species" type="tel" class="validate" data-label="Espécie">
-                    <label for="species">Espécie</label>
+                <div class="card-Produtos">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">add_shopping_cart</i>
+                        <label for="produto">Produto</label>
+                        <select id="produto" name="Produto" data-label="Serviço"></select>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">control_point</i>
+                        <label for="quantProduto">Quantidade do Produto</label>
+                        <select id="quantProduto" name="quantProduto" data-label="Serviço"></select>
+                    </div>
                 </div>
+
                 <div class="input-field col s6">
-                    <i class="material-icons prefix">android</i>
-                    <input id="age" name="age" type="number" class="validate" data-label="Idade">
-                    <label for="age">Idade</label>
+                    <i class="material-icons prefix">add_shopping_cart</i>
+                    <label for="servico">Serviço</label>
+                    <select id="servico" name="servico" class="browser-default" data-label="Serviço"></select>
+
                 </div>
-                <div id="tutorListDiv" class="input-field col s6">
-                    <select name="tutorId" id="tutorId" class="browser-default" data-label="Tutor" required>
-                        <!-- lista dinamica de tutores -->
-                    </select><br>
+                <div id="results" class="input-field col s12">
+                    <i class="material-icons prefix">dashboard</i>
+                    <input id="valortotal">
+                    <label for="resultado">Valor total:</label>
                 </div>
                 <div class="col s3">
                     <a id="btn_salvarPet" class="waves-effect waves-light btn">Enviar</a>
@@ -36,18 +55,17 @@
         </form>
     </div>
 
-    <table id="table_pet">
+    <table id="table_pedido">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Espécie</th>
-                <th>Idade</th>
+                <th>Número da nota</th>
                 <th>Tutor</th>
-                <th>Ações</th>
+                <th>Valor Total</th>
+                <th>Situação</th>               
             </tr>
         </thead>
 
-        <tbody id="pet_list">
+        <tbody id="pedido_list">
             <!-- lista de pets gerada aqui -->
         </tbody>
     </table>

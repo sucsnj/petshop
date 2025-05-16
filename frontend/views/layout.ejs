@@ -40,8 +40,12 @@
                 <script src="javascripts/dashboard.js"></script>
                 <% } %>
 
-                    <script src="js/materialize.js"></script>
-                    <script src="js/init.js"></script>
+                    <% if (body && body.trim()==='pages/registers' ) { %>
+                        <script src="javascripts/dashboard.js"></script>
+                        <% } %>
+
+                            <script src="js/materialize.js"></script>
+                            <script src="js/init.js"></script>
 
 </body>
 

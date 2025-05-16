@@ -93,12 +93,28 @@ function listaServico(data) { // carrega a lista de serviços
 
 function listaPedido(data) {
     // implementar a lista de pedidos TODO
+    let endpoint = `orders/`;
+    let lista = `<tr>
+                        <td>${data.id}</td>
+                        <td>${data.tutorId}</td>
+                        <td>${data.total}</td>
+                        <td>${data.status}</td>
+                        
+                        <td>
+                        <a onclick="crud.menuEdit(${data.id}, '${`pedidoForm`}', '${endpoint}')" 
+                        class="btn-floating btn-small waves-effect waves-light green"><i class="material-icons">edit</i></a> 
+                        
+                        <a onclick="crud.deletarPorId('${endpoint}',${data.id})" 
+                        class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>`
+    return lista;
 }
 
 export const lists = {
     listaPet,
     listaTutor,
     listaProduto,
-    listaServico
-    // listaPedido
+    listaServico,
+    listaPedido
 };

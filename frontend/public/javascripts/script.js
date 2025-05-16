@@ -43,8 +43,8 @@ $(window).on('load', function () {
         },
         orders: () => {
             vars.tab = 5;
-            // buttons.botoesPedido();
-            // start.telaInicial();
+            buttons.botoesPedido();
+            start.telaInicial();
         }
     }
 

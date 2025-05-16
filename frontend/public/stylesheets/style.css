@@ -4,18 +4,30 @@
     padding: 50px;
 }
 
-html, body {
-    height: 100%; /* Garante que toda a página ocupe a altura total */
+html,
+body {
+    height: 100%;
+    /* Garante que toda a página ocupe a altura total */
     margin: 0;
     display: flex;
     flex-direction: column;
 }
 
 main {
-    flex: 1; /* Faz com que o conteúdo ocupe o espaço disponível */
+    flex: 1;
+    /* Faz com que o conteúdo ocupe o espaço disponível */
 }
 
 footer {
     color: white;
     text-align: center;
+}
+
+.card-Produtos {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

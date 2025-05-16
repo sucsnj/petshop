@@ -91,12 +91,18 @@ const botoesServico = () => { // botões para a tela de serviços
 
 const botoesPedido = () => { // botões para a tela de pedidos
     // implementar botões da tela de pedidos TODO
+    $("#btn_novoPedido").on('click', function () { // tela para adicionar um novo pet
+     crud.menuAdd(`pedidoForm`);       
+    });
+    
+
+
 }
 
 export const buttons = {
     botoesPet,
     botoesTutor,
     botoesProduto,
-    botoesServico
-    // botoesPedido
+    botoesServico,
+    botoesPedido
 };

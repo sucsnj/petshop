@@ -6,6 +6,7 @@ let editar = 0; // determina se o usuário está editando ou não
 let tab = 0; // determina qual tela será exibida
 let route = window.location.pathname.split("/")[1]; // determina qual rota será utilizada
 
+
 export const vars = { 
     petId,
     tutorId,
