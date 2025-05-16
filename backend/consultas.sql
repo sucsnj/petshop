@@ -5,7 +5,7 @@
 -- DROP TABLE IF EXISTS services;
 -- DROP TABLE IF EXISTS pets;
 -- DROP TABLE IF EXISTS tutors;
-DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS users;
 
 -- INSERT INTO tutors (name, email, phone) values ('tutor 1', 'ex1@email.com', '123456789');
 -- INSERT INTO tutors (name, email, phone) values ('tutor 2', 'ex2@email.com', '212356798');
@@ -29,3 +29,5 @@ DROP TABLE IF EXISTS users;
 
 -- INSERT INTO orders (tutorId, petId, products, services, total, status) values (1, 1, '[2,1,2]', '[1,1]', 100, 'pendente');
 -- INSERT INTO orders (tutorId, petId, products, services, total, status) values (2, 2, '[2,2]', '[2,1,1]', 240, 'pendente');
+
+-- INSERT INTO users (username, password) values ('admin', 'admin');

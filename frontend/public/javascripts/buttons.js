@@ -2,27 +2,38 @@ import { start } from "./start.js"; // funções para iniciar telas
 import { vars } from "./vars.js"; // variáveis globais
 import { tools } from "./tools.js"; // funções auxiliares
 import { crud } from "./crud.js"; // funções para CRUD
+import { alerts } from "./alerts.js";
 
 const botoesPet = () => { // botões para a tela de pets
     $("#btn_novoPet").on('click', function () { // tela para adicionar um novo pet
-        crud.menuAdd(`petForm`);
+        alerts.verificarLogin().then((resultado) => {
+            if (!resultado) {
+                return;
+            } else {
+                crud.menuAdd(`petForm`);
+            }
+        });
     });
 
     $("#btn_salvarPet").on('click', function () { // tela para salvar um pet
         if (vars.editar) { // verifica se é uma edição ou um novo pet
-            if (confirm("Deseja salvar?")) {
-                crud.atualizarPorId(vars.petId, `pets/`, `petForm`);
-                start.telaInicial();
-            }
+            alerts.mensagemSalvar().then((result) => {
+                if (result.isConfirmed) {
+                    crud.atualizarPorId(vars.petId, `pets/`, `petForm`);
+                    start.telaInicial();
+                }
+            })
         } else { // caso seja um novo pet, confirma se todos os campos estão preenchidos, caso sim, salva
             tools.verificarCamposNovo(`petForm`, `pets/`);
         }
     });
 
     $("#btn_voltarPet").on('click', function () { // voltar para a tela de pets
-        if (confirm("Deseja voltar?")) {
-            start.telaInicial();
-        }
+        alerts.mensagemVoltar().then((result) => {
+            if (result.isConfirmed) {
+                start.telaInicial();
+            }
+        })
     });
 };
 
@@ -92,9 +103,9 @@ const botoesServico = () => { // botões para a tela de serviços
 const botoesPedido = () => { // botões para a tela de pedidos
     // implementar botões da tela de pedidos TODO
     $("#btn_novoPedido").on('click', function () { // tela para adicionar um novo pet
-     crud.menuAdd(`pedidoForm`);       
+        crud.menuAdd(`pedidoForm`);
     });
-    
+
 
 
 }

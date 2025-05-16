@@ -299,18 +299,17 @@ function atualizarPedido(req, res) {
                         VALUES (?, ?, ?, ?)`, [id, serviceId, quantidade, price], (err) => {
                         if (err) return console.error(err);
                     });
-                    setTimeout(() => {
-                        db.run(`UPDATE ${tabela} SET total =(
-                    (SELECT COALESCE(SUM(prodTotal), 0) FROM ${order_product} WHERE orderId = ?) +
-                    (SELECT COALESCE(SUM(servTotal), 0) FROM ${order_service} WHERE orderId = ?))
-                    WHERE id = ?`, [id, id, id], (err) => {
-                            console.log('chegou aqui');
-                        });
-                    }, 500);
                 });
             });
         });
     }
+    setTimeout(() => {
+        db.run(`UPDATE ${tabela} SET total =(
+    (SELECT COALESCE(SUM(prodTotal), 0) FROM ${order_product} WHERE orderId = ?) +
+    (SELECT COALESCE(SUM(servTotal), 0) FROM ${order_service} WHERE orderId = ?))
+    WHERE id = ?`, [id, id, id], (err) => {
+        });
+    }, 500);
 }
 
 function apagarPedido(req, res) {

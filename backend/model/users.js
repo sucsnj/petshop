@@ -7,18 +7,10 @@ require('dotenv').config();
 async function criarUsuario(req, res) {
     const { username, password } = req.body;
 
-    if (!username) {
-        return res.status(400).json({ message: 'Usuário é um campo obrigatório' });
-    }
-    if (username.length < 4) {
-        return res.status(400).json({ message: 'Usuário deve ter no mínimo 6 caracteres' });
-    }
-    if (password.length < 8) {
-        return res.status(400).json({ message: 'Senha deve ter no mínimo 8 caracteres' });
-    }
-    if (!password) {
-        return res.status(400).json({ message: 'Senha é um campo obrigatório' });
-    }
+    if (!username) return res.status(400).json({ message: 'Usuário é um campo obrigatório' });
+    if (username.length < 4) return res.status(400).json({ message: 'Usuário deve ter no mínimo 6 caracteres' });
+    if (password.length < 8) return res.status(400).json({ message: 'Senha deve ter no mínimo 8 caracteres' });
+    if (!password) return res.status(400).json({ message: 'Senha é um campo obrigatório' });
 
     try {
         const salt = await bcrypt.genSalt(10);

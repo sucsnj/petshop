@@ -1,6 +1,7 @@
 import { start } from "./start.js";
 import { vars } from "./vars.js";
 import { crud } from "./crud.js";
+import { alerts } from "./alerts.js";
 
 function telaDeCarregamento(tempo) {
     setTimeout(function () {
@@ -39,15 +40,17 @@ function verificarCamposNovo(formulario, endpoint) { // verifica se todos os cam
     for (let verif of obrigatorio) { // verifica campo a campo se estão preenchidos
         if (!objForm.get(verif.name)) { // se o campo não estiver preenchido
             preenchido = false;
-            return alert(`O campo ${verif.dataset.label} é obrigatório!`);
+            return alerts.mensagemCampo(verif.dataset.label);
         }
     }
 
     if (preenchido) {
-        if (confirm("Deseja salvar?")) {
-            crud.gravar(endpoint, formulario);
-            start.telaInicial();
-        }
+        alerts.mensagemSalvar().then((result) => {
+            if (result.isConfirmed) {
+                crud.gravar(endpoint, formulario);
+                start.telaInicial();
+            }
+        })
     }
 }
 
@@ -82,13 +85,6 @@ function removerAttrRequired(formulario) { // remove o atributo required de todo
     $form.find("input").removeAttr("required"); // Remove o atributo required de todos os inputs
 }
 
-function janelaAlerta(titulo, mensagem) {
-    $("#tituloAlerta").html(titulo);
-    $("#mensagemAlerta").html(mensagem);
-    $("#bloqueioDeFundo").css("display", "block");
-    $("#janelaAlerta").css("display", "block");
-}
-
 export const tools = {
     telaDeCarregamento,
     listaSuspensa,
@@ -96,7 +92,6 @@ export const tools = {
     formParam,
     verificarCamposNovo,
     pegarForm,
-    janelaAlerta, // não usada
     listaDinamica,
     removerAttrRequired
 };
