@@ -5,55 +5,80 @@
         <div class="col s3">
             <a id="btn_novoPedido" class="waves-effect waves-light btn">Novo</a>
         </div>
+    </div>
 
-        <form id="pedidoForm" class="col s12">
-            <div class="row">
+    <form id="pedidoForm">
+        <div class="row">
 
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">person</i>
-                    <input id="cliente" name="cliente" type="text" class="validate" data-label="Nome do Pet">
-                    <label for="cliente">Cliente</label>
-                </div>
+            <!-- Campo Cliente -->
+            <div class="input-field col s6">
+                <i class="material-icons prefix">person</i>
+                <input id="cliente" name="cliente" type="text" class="validate">
+                <label for="cliente">Cliente</label>
+            </div>
 
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">pets</i>
-                    <input id="pet" name="pet" type="text" class="validate" data-label="Nome do Pet">
-                    <label for="name">Nome do Pet</label>
-                </div>
-                <div class="card-Produtos">
-                    <div class="input-field col s6">
-                        <i class="material-icons prefix">add_shopping_cart</i>
-                        <label for="produto">Produto</label>
-                        <select id="produto" name="Produto" data-label="Serviço"></select>
+            <!-- Campo Nome do Pet -->
+            <div class="input-field col s6">
+                <i class="material-icons prefix">pets</i>
+                <input id="pet" name="pet" type="text" class="validate">
+                <label for="pet">Nome do Pet</label>
+            </div>
+            <!-- Card Produtos -->
+            <div id="produtos-container">
+                <div class="card produtos col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">add_shopping_cart</i>
+                            <select name="Produto" class="browser-default"></select>
+                            <label class="active" style="margin-top: 10px;">Produto</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">control_point</i>
+                            <input class="quantProduto" name="quantProduto[]" type="number" min="1" class="validate"
+                                data-label="Quantidade do Produto">
+                            <label class="active" style="margin-top: 10px;">Quantidade do Produto</label>
+                        </div>
+                        <!-- Botão para adicionar produto -->
+                        <div class="col s3">
+                            <a class="waves-effect waves-light btn btnAdicionarProduto">Adicionar Produto</a>
+                        </div>
                     </div>
-
-                    <div class="input-field col s6">
-                        <i class="material-icons prefix">control_point</i>
-                        <label for="quantProduto">Quantidade do Produto</label>
-                        <select id="quantProduto" name="quantProduto" data-label="Serviço"></select>
-                    </div>
-                </div>
-
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">add_shopping_cart</i>
-                    <label for="servico">Serviço</label>
-                    <select id="servico" name="servico" class="browser-default" data-label="Serviço"></select>
-
-                </div>
-                <div id="results" class="input-field col s12">
-                    <i class="material-icons prefix">dashboard</i>
-                    <input id="valortotal">
-                    <label for="resultado">Valor total:</label>
-                </div>
-                <div class="col s3">
-                    <a id="btn_salvarPet" class="waves-effect waves-light btn">Enviar</a>
-                </div>
-                <div class="col s3">
-                    <a id="btn_voltarPet" class="waves-effect waves-light btn">Voltar</a>
                 </div>
             </div>
-        </form>
-    </div>
+            <!-- Card Serviços -->
+            <div id="servico-container">
+                <div class="card produtos col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">build</i>
+                            <select id="servico" name="servico" class="browser-default"></select>
+                            <label class="active" for="servico" style="margin-top: 10px;">Serviço</label>
+                        </div>
+                    </div>
+                    <!-- Botão para adicionar Servico -->
+                    <div class="col s3">
+                        <a class="waves-effect waves-light btn btnAdicionarServico" style="margin-bottom: 10px;">Adicionar Servico</a>                            
+                    </div>
+                </div>
+            </div>
+            <!-- Valor Total -->
+            <div id="results" class="input-field col s12">
+                <i class="material-icons prefix">dashboard</i>
+                <input id="valortotal" type="text">
+                <label for="valortotal">Valor total:</label>
+            </div>
+
+            <!-- Botões -->
+            <div class="col s3">
+                <a id="btn_enviarPedido" class="waves-effect waves-light btn">Enviar</a>
+            </div>
+
+            <div class="col s3">
+                <a id="btn_voltarPedido" class="waves-effect waves-light btn">Voltar</a>
+            </div>
+
+        </div>
+    </form>
 
     <table id="table_pedido">
         <thead>
@@ -61,7 +86,7 @@
                 <th>Número da nota</th>
                 <th>Tutor</th>
                 <th>Valor Total</th>
-                <th>Situação</th>               
+                <th>Situação</th>
             </tr>
         </thead>
 

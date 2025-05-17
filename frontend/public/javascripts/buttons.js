@@ -109,6 +109,57 @@ const botoesPedido = () => { // botões para a tela de pedidos
 
 
 }
+//botao do adicionar produtos no pedido
+$(document).ready(function () {
+  $(document).on('click', '.btnAdicionarProduto', function () {
+    const novoItem = `
+      <div class="card produtos col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <i class="material-icons prefix">add_shopping_cart</i>
+            <select name="Produto" class="browser-default"></select>
+            <label class="active" style="margin-top: 10px;">Produto</label>
+          </div>
+          <div class="input-field col s6">
+            <i class="material-icons prefix">control_point</i>
+            <input class="quantProduto" name="quantProduto[]" type="number" min="1" class="validate" data-label="Quantidade do Produto">
+            <label class="active" style="margin-top: 10px;">Quantidade do Produto</label>
+          </div>
+          <!-- Botão para adicionar produto -->
+          <div class="col s3">
+            <a class="waves-effect waves-light btn btnAdicionarProduto">Adicionar Produto</a>
+          </div>
+        </div>
+      </div>
+    `;
+
+    $('#produtos-container').append(novoItem);
+  });
+});
+//botao do adicionar servico no pedido
+$(document).ready(function () {
+  $(document).on('click', '.btnAdicionarServico', function () {
+    const novoItem = `
+      <div class="card produtos col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">build</i>
+                            <select id="servico" name="servico" class="browser-default"></select>
+                            <label class="active" for="servico" style="margin-top: 10px;">Serviço</label>
+                        </div>
+                    </div>
+                    <!-- Botão para adicionar Servico -->
+                    <div class="col s3">
+                        <a class="waves-effect waves-light btn btnAdicionarServico" style="margin-bottom: 10px;">Adicionar Servico</a>
+                    </div>
+                </div>
+    `;
+    $('#servico-container').append(novoItem);
+  });
+});
+
+
+
 
 export const buttons = {
     botoesPet,
