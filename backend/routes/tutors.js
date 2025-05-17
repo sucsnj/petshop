@@ -104,7 +104,7 @@ router.get('/:id', function (req, res, next) {
  *      400:
  *        description: Dados inválidos
  */
-router.post('/', (req, res) => {
+router.post('/', autenticarToken, (req, res) => {
   criarTutor(req, res);
 });
 
@@ -141,7 +141,7 @@ router.post('/', (req, res) => {
  *       404:
  *         description: Tutor não encontrado
  */
-router.patch('/:id', (req, res) => {
+router.patch('/:id', autenticarToken, (req, res) => {
   atualizarTutor(req, res);
 });
 
@@ -165,7 +165,7 @@ router.patch('/:id', (req, res) => {
  *       404:
  *         description: Tutor não encontrado
  */
-router.delete('/:id', (req, res) => {
+router.delete('/:id', autenticarToken, (req, res) => {
   apagarTutor(req, res);
 });
 

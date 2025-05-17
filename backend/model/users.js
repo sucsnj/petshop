@@ -53,6 +53,31 @@ function logarUsuario(req, res) {
     });
 }
 
+// criação do usuário padrão "admin"
+db.get(`SELECT * FROM users WHERE username = 'admin'`, async (err, row) => {
+    if (err) {
+        console.error('Erro ao verificar admin:', err);
+        return;
+    }
+
+    if (!row) {
+        try {
+            const hashedPassword = await bcrypt.hash('admin', 10);
+            db.run(`INSERT INTO users (username, password) VALUES ('admin', ${hashedPassword})`, (err) => {
+                if (err) {
+                    console.error('Erro ao criar admin:', err);
+                    return;
+                }
+                console.log('Admin criado com sucesso.');
+            });
+        } catch (error) {
+            console.error('Erro ao gerar hash da senha:', error);
+        }
+    } else {
+        console.log('Admin já existe.');
+    }
+});
+
 module.exports = {
     criarUsuario,
     logarUsuario

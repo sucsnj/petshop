@@ -16,16 +16,17 @@ navegue até a pasta `backend` e execute o comando `npm install` ou `npm i` para
 
 navegue até a pasta `frontend` e execute o comando `npm install` ou `npm i` para instalar todas as dependências necessárias do frontend
 
-### Rodando o projeto
 para levantar o servidor, execute o comando `npm run start` ou `npm run dev`
 > Nodemon: `npm run dev` serve para rodar o servidor em modo desenvolvimento
 
 > Obs: lembre-se de estar nas pastas `backend` e `frontend` antes de levantar os respectivos servidores
 
-*Caso necessário, após iniciar o servidor:*
-> Backend: Encaminhe a porta `3000` na aba `Portas` do VS Code, deixando-a pública.
+> Será necessário criar um usuário para fazer o login
 
-> Frontend: Encaminhe a porta `5000` na aba `Portas` do VS Code, deixando-a pública.
+*Caso necessário, após iniciar o servidor:*
+> Backend: Encaminhe a porta correspondente na aba `Portas` do VS Code, deixando-a pública.
+
+> Frontend: Encaminhe a porta correspondente na aba `Portas` do VS Code, deixando-a pública.
 
 ### Visualizando o banco de dados
 para visualizar o banco de dados sqlite3 dentro do do vscode, instale a extensão `sqlite viewer`
@@ -49,8 +50,8 @@ para executar uma série de consultas, use o comando `.read consultas.sql` no te
 
 ou use o comando `sqlite3 database.sqlite < consultas.sql`
 
-### Fazendo commits no github
-para inicializar o projeto, use o comando `git init`
+### Configurações do Git
+para inicializar o git, use o comando `git init`
 
 verifique o email com o comando `git config --global user.email`
 > Obs: para inserir o email do github, use o comando `git config --global user.email seuemail@email.com`
@@ -60,13 +61,29 @@ verifique o nome com o comando `git config --global user.name`
 
 adicione o projeto com o comando `git remote add origin https://github.com/sucsnj/petshop.git`
 
+### Configuração do ambiente (.env)
+> para criar o arquivo `.env`, use o comando `touch .env`
+
+veja o arquivo `.env.example` para saber quais os campos que devem ser preenchidos, e como preenchê-los
+
+use o comand `openssl rand -hex 32` para gerar uma chave secreta aleatória
+
+não use `;` para separar os campos ou finalizar linhas
+
+não use aspas de qualquer natureza para os campos
+> environment: o arquivo `.env` deve estar nas pastas `backend` e `frontend`
+
+### Usando o Swagger
+o swagger está disponível em `http://localhost:4000/api-docs`
+> Obs: O servidor backenddeve estar rodando para que o swagger funcione
+
+## Alguns comandos do git
 para adicionar os arquivos ao commit, use o comando `git add nomeDoArquivo` ou `git add .` para adicionar todos os arquivos
 
 para fazer o commit, use o comando `git commit -m "mensagem do commit"`
 
 para enviar o commit para o github, use o comando `git push origin nomeDaBranch`
 
-### Manuseando as branches
 para criar uma nova branch, use o comando `git branch nomeDaBranch`
 
 para mudar de uma branch para outra, use o comando `git checkout nomeDaBranch`
@@ -77,27 +94,17 @@ para subir a mesclagem das branches, use o comando `git push`
 
 para recuperar uma branch, use o comando `git pull origin nomeDaBranch`
 
-se houver conflitos, use o comando `git reset --hard` para reverter as alterações
+para reverter as alterações, use o comando `git reset --hard`
 
-### Configuração do ambiente (.env)
-> para criar o arquivo `.env`, use o comando `touch .env`
+para mesclar arquivos de uma branch no repositório git, use o comando `git merge origin/nomeDaBranch`
 
-veja o arquivo `env.example` para saber quais os campos que devem ser preenchidos, e como preenchê-los
-
-não use `;` para separar os campos ou finalizar linhas
-
-não use aspas de qualquer natureza para os campos
-> environment: o arquivo `.env` deve estar nas pastas `backend` e `frontend`
-
-### Usando o Swagger
-o swagger está disponível em `http://localhost:4000/api-docs`
-> Obs: O servidor deve estar rodando para que o swagger funcione
-
-## Estrututa do projeto
+## Estrutura do projeto
 ### Backend
 📂 `banco/` → Configuração e inicialização do banco de dados.
 
 📂 `bin/` → Scripts de inicialização da aplicação.
+
+📂 `middleware/` → Middleware para proteção por token.
 
 📂 `model/` → Lógica do CRUD e interação com o banco de dados.
 
@@ -107,6 +114,8 @@ o swagger está disponível em `http://localhost:4000/api-docs`
 
 ⚙️ `.env` → Arquivo de configuração do ambiente.
 
+⚙️ `.env.example` → Exemplo de arquivo de configuração do ambiente. `(opcional)`
+
 🔍 `.gitignore` → Arquivo de configuração do git.
 
 ⚙️ `app.js` → Arquivo de configuração do servidor.
@@ -114,8 +123,6 @@ o swagger está disponível em `http://localhost:4000/api-docs`
 📑 `consultas.sql` → Arquivo de consultas do banco de dados. `(opcional)`
 
 📑 `database.sqlite` → Banco de dados do frontend.
-
-⚙️ `env.example` → Exemplo de arquivo de configuração do ambiente. `(opcional)`
 
 ⚙️ `package-lock.json` → Arquivo de configuração do pacote.
 
@@ -132,11 +139,11 @@ o swagger está disponível em `http://localhost:4000/api-docs`
 
 ⚙️ `.env` → Arquivo de configuração do ambiente.
 
+⚙️ `env.example` → Exemplo de arquivo de configuração do ambiente. `(opcional)`
+
 🔍 `.gitignore` → Arquivo de configuração do git.
 
 ⚙️ `app.js` → Arquivo de configuração do servidor.
-
-⚙️ `env.example` → Exemplo de arquivo de configuração do ambiente. `(opcional)`
 
 ⚙️ `package-lock.json` → Arquivo de configuração do pacote.
 
