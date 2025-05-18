@@ -49,108 +49,174 @@ const botoesPet = () => { // botões para a tela de pets
     });
 };
 
-const botoesTutor = () => { // botões para a tela de tutores
+const botoesTutor = () => { // botões para a tela de tutors
     $("#btn_novoTutor").on('click', function () { // tela para adicionar um novo tutor
-        crud.menuAdd(`tutorForm`);
-    })
+        alerts.verificarLogin().then((resultado) => {
+            if (!resultado) {
+                return;
+            } else {
+                crud.menuAdd(`tutorForm`);
+            }
+        });
+    });
+
     $("#btn_salvarTutor").on('click', function () { // tela para salvar um tutor
         if (vars.editar) { // verifica se é uma edição ou um novo tutor
-            if (confirm("Deseja salvar?")) {
-                crud.atualizarPorId(vars.tutorId, `tutors/`, `tutorForm`);
-                start.telaInicial();
-            }
+            alerts.mensagemSalvar().then((result) => {
+                if (result.isConfirmed) {
+                    crud.atualizarPorId(vars.tutorId, `tutors/`, `tutorForm`);
+                    start.telaInicial();
+                }
+            })
         } else { // caso seja um novo tutor, confirma se todos os campos estão preenchidos, caso sim, salva
             tools.verificarCamposNovo(`tutorForm`, `tutors/`);
         }
-    })
-    $("#btn_voltarTutor").on('click', function () { // voltar para a tela de tutores
-        if (confirm("Deseja voltar?")) {
-            start.telaInicial();
-        }
-    })
-}
+    });
+
+    $("#btn_voltarTutor").on('click', function () { // voltar para a tela de tutors
+        alerts.mensagemVoltar().then((result) => {
+            if (result.isConfirmed) {
+                start.telaInicial();
+            }
+        })
+    });
+};
 
 const botoesProduto = () => { // botões para a tela de produtos
     $("#btn_novoProduto").on('click', function () { // tela para adicionar um novo produto
-        crud.menuAdd(`produtoForm`);
+        alerts.verificarLogin().then((resultado) => {
+            if (!resultado) {
+                return;
+            } else {
+                crud.menuAdd(`produtoForm`);
+            }
+        });
     })
     $("#btn_salvarProduto").on('click', function () { // tela para salvar um produto
         if (vars.editar) { // verifica se é uma edição ou um novo produto
-            if (confirm("Deseja salvar?")) {
-                crud.atualizarPorId(vars.prodId, `products/`, `produtoForm`);
-                start.telaInicial();
-            }
+            alerts.mensagemSalvar().then((result) => {
+                if (result.isConfirmed) {
+                    crud.atualizarPorId(vars.prodId, `products/`, `produtoForm`);
+                    start.telaInicial();
+                }
+            })
         } else { // caso seja um novo produto, confirma se todos os campos estão preenchidos, caso sim, salva
             tools.verificarCamposNovo(`produtoForm`, `products/`);
         }
     })
     $("#btn_voltarProduto").on('click', function () { // voltar para a tela de produtos
-        if (confirm("Deseja voltar?")) {
-            start.telaInicial();
-        }
+        alerts.mensagemVoltar().then((result) => {
+            if (result.isConfirmed) {
+                start.telaInicial();
+            }
+        })
     })
 }
 
 const botoesServico = () => { // botões para a tela de serviços
     $("#btn_novoServico").on('click', function () { // tela para adicionar um novo serviço
-        crud.menuAdd(`servicoForm`);
+        alerts.verificarLogin().then((resultado) => {
+            if (!resultado) {
+                return;
+            } else {
+                crud.menuAdd(`servicoForm`);
+            }
+        });
     })
     $("#btn_salvarServico").on('click', function () { // tela para salvar um serviço
-        if (vars.editar) { // verifica se é uma edição ou um novo serviço
-            if (confirm("Deseja salvar?")) {
-                crud.atualizarPorId(vars.servId, `services/`, `servicoForm`);
-                start.telaInicial();
-            }
-        } else { // caso seja um novo serviço, confirma se todos os campos estão preenchidos, caso sim, salva
+        if (vars.editar) { // verifica se é uma edição ou um novo produto
+            alerts.mensagemSalvar().then((result) => {
+                if (result.isConfirmed) {
+                    crud.atualizarPorId(vars.servId, `services/`, `servicoForm`);
+                    start.telaInicial();
+                }
+            })
+        } else { // caso seja um novo produto, confirma se todos os campos estão preenchidos, caso sim, salva
             tools.verificarCamposNovo(`servicoForm`, `services/`);
         }
     })
     $("#btn_voltarServico").on('click', function () { // voltar para a tela de serviços
-        if (confirm("Deseja voltar?")) {
-            start.telaInicial();
-        }
+        alerts.mensagemVoltar().then((result) => {
+            if (result.isConfirmed) {
+                start.telaInicial();
+            }
+        })
     })
 }
 
-// implementando botões do pedido ////////////////////////////////////////////////////////
 const botoesPedido = () => { // botões para a tela de pedidos
-    $("#btn_novoPedido").on('click', function () { // tela para adicionar um novo pet
-        crud.menuAdd(`pedidoForm`);
+    $("#btn_novoPedido").on('click', function () { // tela para adicionar um novo pedido
+        alerts.verificarLogin().then((resultado) => {
+            if (!resultado) {
+                return;
+            } else {
+                crud.menuAdd(`pedidoForm`);
+            }
+        });
+    });
+    $("#btn_salvarPedido").on('click', function () { // tela para salvar um pedido
+        produtosCorpo(quantidadeProdutos, listaProdutos);
+        servicosCorpo(quantidadeServicos, listaServicos);
+        if (vars.editar) { // verifica se é uma edição ou um novo pedido
+            alerts.mensagemSalvar().then((result) => {
+                if (result.isConfirmed) {
+                    crud.atualizarPorId(vars.pedId, `orders/`, `pedidoForm`);
+                    start.telaInicial();
+                }
+            })
+        } else { // caso seja um novo produto, confirma se todos os campos estão preenchidos, caso sim, salva
+            tools.verificarCamposNovo(`pedidoForm`, `orders/`);
+        }
+    })
+    $("#btn_voltarPedido").on('click', function () { // botão para voltar
+        alerts.mensagemVoltar().then((result) => {
+            if (result.isConfirmed) {
+                start.telaInicial();
+            }
+        })
     });
 
-    // produtos
-    $("#btn_enviarPedido").on('click', function () { // botão para enviar pedido
-        produtosCorpo(quantidadeProdutos, listaProdutos); // retorna o array de produtos para o backend
-        servicosCorpo(quantidadeServicos, listaServicos); // retorna o array de serviços para o backend
-    });
-    $("#btn_voltarPedido").on('click', function () { // botão para voltar
-        start.telaInicial();
-    });
-    $("#btn_produtoAdd").on('click', function () { // botão para produto dentro do html
+    // botões card produto
+    addCardProduto();
+    removerCardProduto();
+    atualizarValoresProduto();
+
+    // botões card serviço
+    addCardServico();
+    removerCardServico();
+    atualizarValoresServico();
+}
+
+function limparCards() {
+    $('.card.produtos').remove(); // Remove todos os cards de produtos
+    $('.card.servicos').remove(); // Remove todos os cards de produtos
+    atualizarListaQuantidadesProdutos();
+    atualizarListaProdutos();
+    atualizarListaQuantidadesServicos();
+    atualizarListaServicos();
+}
+
+// funções para produtos
+function addCardProduto() {
+    $(document).on('click', '#btn_produtoAdd, .btnAdicionarProduto', function () {
         cardProduto();
+
+        if ($(this).hasClass("btnAdicionarProduto")) {
+            $(".btnAdicionarProduto").hide();
+            $(".btnRemoverProduto").show();
+        }
     });
-    $(document).on('click', '.btnAdicionarProduto', function () { // botão para produto dentro do js
-        $(".btnAdicionarProduto").hide();
-        $(".btnRemoverProduto").show();
-        cardProduto();
-    });
-    $(document).on('click', '.btnRemoverProduto', function () { // botão para remover produto
+}
+
+function removerCardProduto() {
+    $(document).on('click', '.btnRemoverProduto', function () {
         $(this).closest('.card.produtos').remove();
         atualizarListaQuantidadesProdutos();
         atualizarListaProdutos();
     });
-    $(document).on('input', '.quantProduto', function () {
-        atualizarListaQuantidadesProdutos();
-    });
-    $(document).on('input', '.quantProduto', atualizarListaProdutos);
-    $(document).on('change', 'select[name="Produto"]', atualizarListaProdutos);
+}
 
-    $(document).on('change', 'select[name="Produto"]', function () {
-        let selectedOption = $(this).find('option:selected');
-        let preco = selectedOption.data('price') || 0;
-        $(this).closest(".card").find(".precoProduto").text(preco);
-    });
-
+function atualizarValoresProduto() {
     $(document).on('change', 'select[name="Produto"], .quantProduto', function () {
         let card = $(this).closest(".card");
         let selectedOption = card.find('select[name="Produto"] option:selected');
@@ -160,56 +226,18 @@ const botoesPedido = () => { // botões para a tela de pedidos
 
         card.find(".precoProduto").text(preco);
         card.find(".totalProduto").text(total);
-    });
 
-    // serviços
-    $("#btn_servicoAdd").on('click', function () { // botão para serviço dentro do html
-        cardServico();
-    });
-    $(document).on('click', '.btnAdicionarServico', function () { // botão para serviço dentro do js
-        $(".btnAdicionarServico").hide();
-        $(".btnRemoverServico").show();
-        cardServico();
-    });
-    $(document).on('click', '.btnRemoverServico', function () { // botão para remover serviço
-        $(this).closest('.card.servicos').remove();
-        atualizarListaQuantidadesServicos();
-        atualizarListaServicos();
-    });
-    $(document).on('input', '.quantServico', function () {
-        atualizarListaQuantidadesServicos();
-    });
-    $(document).on('input', '.quantServico', atualizarListaServicos);
-    $(document).on('change', 'select[name="Servico"]', atualizarListaServicos);
-
-    $(document).on('change', 'select[name="Servico"]', function () {
-        let selectedOption = $(this).find('option:selected');
-        let preco = selectedOption.data('price') || 0;
-        $(this).closest(".card").find(".precoServico").text(preco);
-    });
-
-    $(document).on('change', 'select[name="Servico"], .quantServico', function () {
-        let card = $(this).closest(".card");
-        let selectedOption = card.find('select[name="Servico"] option:selected');
-        let preco = selectedOption.data('price') || 0;
-        let quantidade = card.find('.quantServico').val() || 1;
-        let total = preco * quantidade;
-
-        card.find(".precoServico").text(preco);
-        card.find(".totalServico").text(total);
+        atualizarListaQuantidadesProdutos();
+        atualizarListaProdutos();
     });
 }
 
-// card produto //////////////////////////////////////////////////////////////////////////////////////
 function cardProduto() { // cria um card para um único produto
-    crud.carregar(`products/`).then((data) => {
-        produtosLista = data; // contém a lista de todos os produtos no banco de dados
-
+    crud.carregar(`products/`).then((data) => { // contém a lista de todos os produtos no banco de dados
         let options = '<option value="" disabled selected>Selecione um Produto</option>';
-        for (let i = 0; i < produtosLista.length; i++) {
-            options += `<option value="${produtosLista[i].id}" data-price="${produtosLista[i].price}">${produtosLista[i].name}</option>`;
+        for (let i = 0; i < data.length; i++) {
+            options += `<option value="${data[i].id}" data-price="${data[i].price}">${data[i].name}</option>`;
         }
-        produtoId += 1;
 
         const novoItem = $(`
             <div class="card produtos col s12">
@@ -228,7 +256,7 @@ function cardProduto() { // cria um card para um único produto
                         </div>
                         <div class="input-field col s2">
                             <i class="material-icons prefix">control_point</i>
-                            <input class="quantProduto" name="quantProduto[]" type="number" min="1" class="validate" value="1">
+                            <input class="quantProduto" type="number" min="1" class="validate" value="1">
                             <label class="active">Quantidade</label>
                         </div>
                         <div class="input-field col s3">
@@ -238,7 +266,7 @@ function cardProduto() { // cria um card para um único produto
                     </div>
                     <div class="row s12">
                         <div class="col s3">
-                            <a id="btn_removeProd-${produtoId}" class="waves-effect waves-light btn btnRemoverProduto">Remover Produto</a>
+                            <a class="waves-effect waves-light btn btnRemoverProduto">Remover Produto</a>
                         </div>
                     </div>
                 </div>
@@ -250,19 +278,6 @@ function cardProduto() { // cria um card para um único produto
         atualizarListaProdutos();
     });
 }
-
-// Atualiza o preço e o total ao mudar o produto ou a quantidade
-$(document).on('change', 'select[name="Produto"], .quantProduto', function () {
-    let card = $(this).closest(".card");
-    let selectedOption = card.find('select[name="Produto"] option:selected');
-    let preco = selectedOption.data('price') || 0;
-    let quantidade = card.find('.quantProduto').val() || 1;
-    let total = preco * quantidade;
-
-    card.find(".precoProduto").text(preco);
-    card.find(".totalProduto").text(total);
-});
-
 
 function atualizarListaProdutos() { // atualiza a lista de produtos do pedido
     $('.card.produtos').each(function (index) {
@@ -281,22 +296,53 @@ function atualizarListaQuantidadesProdutos() { // atualiza a lista de quantidade
 }
 
 function produtosCorpo(qtd, prod) { // cria um array com a lista dos produtos para o backend
-    produtos = [];
     for (let i = 0; i < qtd.length; i++) {
         produtos.push(...Array(qtd[i]).fill(prod[i]));
     }
 }
 
-// card serviço //////////////////////////////////////////////////////////////////////////////////////
-function cardServico() { // cria um card para um único servico
-    crud.carregar(`services/`).then((data) => {
-        servicosLista = data; // contém a lista de todos os servicos no banco de dados
+// funções para serviços
+function addCardServico() {
+    $(document).on('click', '#btn_servicoAdd, .btnAdicionarServico', function () {
+        cardServico();
 
-        let options = '<option value="" disabled selected>Selecione um Servico</option>';
-        for (let i = 0; i < servicosLista.length; i++) {
-            options += `<option value="${servicosLista[i].id}" data-price="${servicosLista[i].price}">${servicosLista[i].name}</option>`;
+        if ($(this).hasClass("btnAdicionarServico")) {
+            $(".btnAdicionarServico").hide();
+            $(".btnRemoverServico").show();
         }
-        servicoId += 1;
+    });
+}
+
+function removerCardServico() {
+    $(document).on('click', '.btnRemoverServico', function () {
+        $(this).closest('.card.servicos').remove();
+        atualizarListaQuantidadesServicos();
+        atualizarListaServicos();
+    });
+}
+
+function atualizarValoresServico() {
+    $(document).on('change', 'select[name="Servico"], .quantServico', function () {
+        let card = $(this).closest(".card");
+        let selectedOption = card.find('select[name="Servico"] option:selected');
+        let preco = selectedOption.data('price') || 0;
+        let quantidade = card.find('.quantServico').val() || 1;
+        let total = preco * quantidade;
+
+        card.find(".precoServico").text(preco);
+        card.find(".totalServico").text(total);
+
+        atualizarListaQuantidadesServicos();
+        atualizarListaServicos();
+    });
+}
+
+function cardServico() { // cria um card para um único servico
+    crud.carregar(`services/`).then((data) => { // contém a lista de todos os servicos no banco de dados
+        let options = '<option value="" disabled selected>Selecione um Servico</option>';
+        for (let i = 0; i < data.length; i++) {
+            options += `<option value="${data[i].id}" data-price="${data[i].price}">${data[i].name}</option>`;
+        }
 
         const novoItem = $(`
             <div class="card servicos col s12">
@@ -315,7 +361,7 @@ function cardServico() { // cria um card para um único servico
                         </div>
                         <div class="input-field col s2">
                             <i class="material-icons prefix">control_point</i>
-                            <input class="quantServico" name="quantServico[]" type="number" min="1" class="validate" value="1">
+                            <input class="quantServico" type="number" min="1" class="validate" value="1">
                             <label class="active">Quantidade</label>
                         </div>
                         <div class="input-field col s3">
@@ -325,7 +371,7 @@ function cardServico() { // cria um card para um único servico
                     </div>
                     <div class="row s12">
                         <div class="col s3">
-                            <a id="btn_removeProd-${servicoId}" class="waves-effect waves-light btn btnRemoverServico">Remover Servico</a>
+                            <a class="waves-effect waves-light btn btnRemoverServico">Remover Servico</a>
                         </div>
                     </div>
                 </div>
@@ -338,26 +384,25 @@ function cardServico() { // cria um card para um único servico
     });
 }
 
-function atualizarListaServicos() { // atualiza a lista de serviços do pedido
+function atualizarListaServicos() { // atualiza a lista de servicos do pedido
     $('.card.servicos').each(function (index) {
-        let servicoId = $(this).find('select[name="Servico"]').val(); // Captura o ID do serviço
+        let servicoId = $(this).find('select[name="Servico"]').val(); // Captura o ID do servico
         if (servicoId) { // Evita criar valores vazios dentro do array
             listaServicos[index] = Number(servicoId); // guarda o valor antigo, e altera apenas o que modificado
         }
     });
 }
 
-function atualizarListaQuantidadesServicos() { // atualiza a lista de quantidades dos serviços do pedido
+function atualizarListaQuantidadesServicos() { // atualiza a lista de quantidades dos servicos do pedido
     quantidadeServicos = [];
     $('.quantServico').each(function () {
         quantidadeServicos.push(Number($(this).val())); // Armazena cada valor corretamente
     });
 }
 
-function servicosCorpo(qtd, prod) { // cria um array com a lista dos serviços para o backend
-    servicos = [];
+function servicosCorpo(qtd, serv) { // cria um array com a lista dos servicos para o backend
     for (let i = 0; i < qtd.length; i++) {
-        servicos.push(...Array(qtd[i]).fill(prod[i]));
+        servicos.push(...Array(qtd[i]).fill(serv[i]));
     }
 }
 
@@ -366,5 +411,12 @@ export const buttons = {
     botoesTutor,
     botoesProduto,
     botoesServico,
-    botoesPedido
+    botoesPedido,
+    produtos,
+    servicos,
+    quantidadeProdutos,
+    quantidadeServicos,
+    produtosCorpo,
+    servicosCorpo,
+    limparCards
 };

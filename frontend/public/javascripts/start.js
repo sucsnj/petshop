@@ -1,6 +1,7 @@
 import { vars } from './vars.js';
 import { lists } from './lists.js';
 import { tools } from './tools.js';
+import { buttons } from './buttons.js';
 
 function telaInicial() { // exibe a tela inicial
     const removerRequired = [ // elementos que terão seus atributos required removidos sempre que a tela inicial for carregada
@@ -39,6 +40,7 @@ function telaInicial() { // exibe a tela inicial
         },
         5: () => { // TODO implentar pedidos
             tools.listaDinamica(`orders/`, `pedido_list`, lists.listaPedido);
+            buttons.limparCards();
             $("#pedidoForm").hide();
             $("#btn_novoPedido").show();
             $("#table_pedido").show();

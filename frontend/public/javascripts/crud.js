@@ -2,6 +2,7 @@ import { tools } from './tools.js';
 import { vars } from './vars.js';
 import { lists } from './lists.js'; // funções para listas dinâmicas
 import { alerts } from './alerts.js';
+import { buttons } from './buttons.js'; // temporário TODO
 
 function menuAdd(formulario) { // menu de adição
     const form = document.getElementById(formulario);
@@ -86,7 +87,22 @@ async function carregar(endpoint) { // faz um GET e ordena alfabeticamente >> us
 }
 
 function gravar(endpoint, form) { // faz um POST
-    let json = JSON.stringify(tools.pegarForm(form)); // converte o objeto para JSON
+    let products = buttons.produtos;
+    let services = buttons.servicos;
+    let json = {};
+    if (endpoint == "orders/") {
+        json = tools.pegarForm(form);
+        json.petId = Number(json.petId); // converte o id de pet para número
+
+        delete json.Produto; // apaga elementos desnecessários
+        delete json.Servico;
+
+        json.products = JSON.stringify(products); // converte o elemento para JSON
+        json.services = JSON.stringify(services);
+        json = JSON.stringify(json); // converte o objeto para JSON
+    } else {
+        json = JSON.stringify(tools.pegarForm(form)); // converte o objeto para JSON
+    }
 
     fetch(url + endpoint, {
         method: "POST",
@@ -98,6 +114,8 @@ function gravar(endpoint, form) { // faz um POST
     })
         .then(res => res.json())
         .then(data => {
+            buttons.produtos.length = 0;
+            buttons.servicos.length = 0;
             carregarListaAposCRUD();
         })
 }
@@ -146,7 +164,6 @@ function deletarPorId(endpoint, id) { // faz um DELETE
             })
         }
     });
-    // if (!confirm("Deseja deletar?")) return; // Confirmação antes da requisição
 }
 
 // Independente do endpoint, recarrega os dados
@@ -156,7 +173,7 @@ function carregarListaAposCRUD() {
         2: () => tools.listaDinamica(`tutors/`, `tutor_list`, lists.listaTutor),
         3: () => tools.listaDinamica(`products/`, `produto_list`, lists.listaProduto),
         4: () => tools.listaDinamica(`services/`, `servico_list`, lists.listaServico),
-        // 5: () => tools.listaDinamica(`orders/`, `pedido_list`, lists.listaPedido), TODO implementar pedidos
+        5: () => tools.listaDinamica(`orders/`, `pedido_list`, lists.listaPedido),
     };
 
     if (executar[vars.tab]) { // executa a função correspondente ao endpoint
