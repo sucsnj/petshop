@@ -157,7 +157,9 @@ const botoesPedido = () => { // botões para a tela de pedidos
             alerts.mensagemSalvar().then((result) => {
                 if (result.isConfirmed) {
                     crud.atualizarPorId(vars.pedId, `orders/`, `pedidoForm`);
-                    start.telaInicial();
+                    setTimeout(() => {
+                        start.telaInicial();
+                    }, 2000);
                 }
             })
         } else { // caso seja um novo produto, confirma se todos os campos estão preenchidos, caso sim, salva
@@ -228,8 +230,8 @@ function atualizarValoresProduto() {
     });
 }
 
-function cardProduto(produtoId = null, quantidade = 1) { // recupera o card do backend e preenche os campos ou cria um novo card
-    crud.carregar(`products/`).then((data) => {
+function cardProduto(produtoId = null, quantidade = 1) {
+    crud.carregar('products/').then((data) => {
         let options = '<option value="" disabled>Selecione um Produto</option>';
         for (let i = 0; i < data.length; i++) {
             const selected = produtoId == data[i].id ? 'selected' : '';
@@ -253,7 +255,7 @@ function cardProduto(produtoId = null, quantidade = 1) { // recupera o card do b
                         </div>
                         <div class="input-field col s2">
                             <i class="material-icons prefix">control_point</i>
-                            <input class="quantProduto" type="number" min="1" class="validate" value="${quantidade}">
+                            <input class="quantProduto" type="number" min="1" value="${quantidade}">
                             <label class="active">Quantidade</label>
                         </div>
                         <div class="input-field col s3">
@@ -272,7 +274,6 @@ function cardProduto(produtoId = null, quantidade = 1) { // recupera o card do b
 
         $('#produtos_container').append(novoItem);
 
-        // Atualiza valores do card
         novoItem.find('select[name="Produto"]').val(produtoId).trigger('change');
         novoItem.find('.quantProduto').val(quantidade).trigger('change');
         atualizarListaQuantidadesProdutos();

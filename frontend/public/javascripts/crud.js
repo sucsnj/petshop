@@ -3,6 +3,7 @@ import { vars } from './vars.js';
 import { lists } from './lists.js'; // funções para listas dinâmicas
 import { alerts } from './alerts.js';
 import { buttons } from './buttons.js';
+import { start } from './start.js';
 
 function menuAdd(formulario) { // menu de adição
     const form = document.getElementById(formulario);
@@ -50,6 +51,8 @@ function menuEdit(id, form, endpoint) { // menu de edição, está sendo chamado
                 if (Array.isArray(data)) data = data[0];
 
                 if (form === "pedidoForm") {
+                    vars.editar = true;
+                    vars.pedId = id;
                     preencherPedidoEdit(data);
                 } else {
                     tools.listaSuspensa(`tutors`, `tutorId`, `Tutor`).then(() => {
@@ -77,26 +80,39 @@ function menuEdit(id, form, endpoint) { // menu de edição, está sendo chamado
 }
 
 function preencherPedidoEdit(data) {
-    // preenche apenas os campos de tutor e pet
-    $('#tutorId').val(data.tutorId).trigger('change');
-    $('#petId').val(data.petId).trigger('change');
-    buttons.limparCards();
+    // Primeiro, preencha as listas suspensas (selects) de tutor e pet
+    Promise.all([
+        tools.listaSuspensa('tutors', 'tutorId', 'Tutor'),
+        tools.listaSuspensa('pets', 'petId', 'Pet')
+    ]).then(() => {
+        $('#tutorId').val(data.tutorId).trigger('change');
+        $('#petId').val(data.petId).trigger('change');
 
-    const prodIds = JSON.parse(data.productIds);
-    const prodQtds = data.prodQtds.split(',').map(Number);
-    for (let i = 0; i < prodIds.length; i++) {
-        buttons.cardProduto(prodIds[i], prodQtds[i]);
-    }
+        // Limpa cards antigos
+        buttons.limparCards();
 
-    const servIds = JSON.parse(data.serviceIds);
-    const servQtds = data.servQtds.split(',').map(Number);
-    for (let i = 0; i < servIds.length; i++) {
-        buttons.cardServico(servIds[i], servQtds[i]);
-    }
+        // Produtos
+        if (data.productIds && data.prodQtds !== null) {
+            const prodIds = JSON.parse(data.productIds);
+            const prodQtds = data.prodQtds.split(',').map(Number);
+            for (let i = 0; i < prodIds.length; i++) {
+                buttons.cardProduto(prodIds[i], prodQtds[i]);
+            }
+        }
 
-    // preenche os outros campos caso necessário
-    $('#status').val(data.status).trigger('change');
-    $('#total').val(data.total);
+        // Serviços
+        if (data.serviceIds && data.servQtds !== null) {
+            const servIds = JSON.parse(data.serviceIds);
+            const servQtds = data.servQtds.split(',').map(Number);
+            for (let i = 0; i < servIds.length; i++) {
+                buttons.cardServico(servIds[i], servQtds[i]);
+            }
+        }
+
+        // Outros campos
+        $('#status').val(data.status).trigger('change');
+        $('#total').val(data.total);
+    });
 }
 
 async function carregar(endpoint) { // faz um GET e ordena alfabeticamente >> usando async/await
@@ -145,7 +161,17 @@ function gravar(endpoint, form) { // faz um POST
 }
 
 function atualizarPorId(id, endpoint, form) { // faz um PATCH
-    json = JSON.stringify(tools.pegarForm(form));
+    buttons.produtosCorpo(buttons.quantidadeProdutos, buttons.listaProdutos);
+    buttons.servicosCorpo(buttons.quantidadeServicos, buttons.listaServicos);
+
+    let json = tools.pegarForm(form);
+    json.petId = Number(json.petId);
+    delete json.Produto;
+    delete json.Servico;
+    json.products = JSON.stringify(buttons.produtos);
+    json.services = JSON.stringify(buttons.servicos);
+    json = JSON.stringify(json);
+
     fetch(url + endpoint + id, {
         method: 'PATCH',
         headers: {
@@ -156,9 +182,10 @@ function atualizarPorId(id, endpoint, form) { // faz um PATCH
     })
         .then(res => res.json())
         .then(data => {
-            alerts.mensagemFeito();
+            buttons.produtos.length = 0;
+            buttons.servicos.length = 0;
             carregarListaAposCRUD();
-        })
+        });
 }
 
 function deletarPorId(endpoint, id) { // faz um DELETE
