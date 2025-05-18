@@ -17,7 +17,8 @@ function menuAdd(formulario) { // menu de adição
     const param = tools.formParam(formulario);
     $(`#table_${param[0]}`).hide(); // esconde a tabela correspondente ao formulário
     $(`#btn_novo${param[1]}`).hide(); // esconde o botão de adicionar correspondente ao formulário
-    tools.listaSuspensa(`tutors`, `tutorId`);
+    tools.listaSuspensa(`tutors`, `tutorId`, `Tutor`);
+    tools.listaSuspensa(`pets`, `petId`, `Pet`);
 }
 
 function menuEdit(id, form, endpoint) { // menu de edição, está sendo chamado por uma lista dinâmica
@@ -49,7 +50,7 @@ function menuEdit(id, form, endpoint) { // menu de edição, está sendo chamado
                     if (Array.isArray(data)) { // se a resposta for um array, pega o primeiro [0], usado para preencher os campos
                         data = data[0];
                     }
-                    tools.listaSuspensa(`tutors`, `tutorId`).then(() => {
+                    tools.listaSuspensa(`tutors`, `tutorId`, `Tutor`).then(() => {
                         $(`#tutorId`).val(data.tutorId).trigger("change");
                     });
                     vars.editar = true; // confirma que o usuário está editando

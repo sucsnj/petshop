@@ -75,7 +75,7 @@ não use aspas de qualquer natureza para os campos
 
 ### Usando o Swagger
 o swagger está disponível em `http://localhost:4000/api-docs`
-> Obs: O servidor backenddeve estar rodando para que o swagger funcione
+> Obs: O servidor backend deve estar rodando para que o swagger funcione
 
 ## Alguns comandos do git
 para adicionar os arquivos ao commit, use o comando `git add nomeDoArquivo` ou `git add .` para adicionar todos os arquivos

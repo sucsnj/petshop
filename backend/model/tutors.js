@@ -65,7 +65,8 @@ function atualizarTutor(req, res) {
 
         const novoCorpo = {};
         for (let key in row) {
-            novoCorpo[key] = corpo.hasOwnProperty(key) ? (typeof corpo[key] === "string" ? corpo[key].trim() : corpo[key]) : row[key];
+            // novoCorpo[key] = corpo.hasOwnProperty(key) ? (typeof corpo[key] === "string" ? corpo[key].trim() : corpo[key]) : row[key]; // antigo TODO
+            novoCorpo[key] = corpo.hasOwnProperty(key) ? (corpo[key] ? corpo[key].trim() : null) : row[key];
         }
 
         db.run(`UPDATE ${tabela} 
@@ -76,6 +77,33 @@ function atualizarTutor(req, res) {
                 return res.status(500).json({ error: 'Erro ao atualizar o elemento' });
             }
             return res.json('Elemento atualizado!');
+        });
+    });
+}
+
+function atualizarTutorPUT(req, res) {
+    const id = Number(req.params.id);
+    const corpo = req.body;
+
+    // Verifica se todos os campos necessários foram enviados
+    if (!corpo.name || !corpo.email || !corpo.phone) {
+        return res.status(400).json({ error: "Todos os campos (name, email, phone) devem ser fornecidos." });
+    }
+
+    db.get(`SELECT * FROM ${tabela} WHERE id = ?`, [id], (err, row) => {
+        if (!row) {
+            return res.status(404).json({ error: "Id não encontrado." });
+        }
+
+        // Atualiza todos os campos
+        db.run(`UPDATE ${tabela} 
+            SET name = ?, email = ?, phone = ? 
+            WHERE id = ?`, [corpo.name.trim(), corpo.email.trim(), corpo.phone, id], function (err) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: "Erro ao atualizar o elemento." });
+            }
+            return res.json({ message: "Elemento atualizado com sucesso!" });
         });
     });
 }

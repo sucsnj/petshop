@@ -10,10 +10,10 @@ function telaDeCarregamento(tempo) {
     }, tempo);
 }
 
-async function listaSuspensa(endpoint, idName) { // cria uma lista suspensa dinâmica usando o async para garantir o termino da requisição
+async function listaSuspensa(endpoint, idName, nome) { // cria uma lista suspensa dinâmica usando o async para garantir o termino da requisição
     return crud.carregar(`${endpoint}/`)
         .then((data) => {
-            let lista = `<option disabled selected>Selecione um item</option>`;
+            let lista = `<option disabled selected>Selecione um ${nome}</option>`;
             for (let dat of data) {
                 lista += `<option value="${dat.id}">${dat.name}</option>`;
             }

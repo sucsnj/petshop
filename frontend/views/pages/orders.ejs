@@ -5,55 +5,57 @@
         <div class="col s3">
             <a id="btn_novoPedido" class="waves-effect waves-light btn">Novo</a>
         </div>
-
-        <form id="pedidoForm" class="col s12">
-            <div class="row">
-
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">person</i>
-                    <input id="cliente" name="cliente" type="text" class="validate" data-label="Nome do Pet">
-                    <label for="cliente">Cliente</label>
-                </div>
-
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">pets</i>
-                    <input id="pet" name="pet" type="text" class="validate" data-label="Nome do Pet">
-                    <label for="name">Nome do Pet</label>
-                </div>
-                <div class="card-Produtos">
-                    <div class="input-field col s6">
-                        <i class="material-icons prefix">add_shopping_cart</i>
-                        <label for="produto">Produto</label>
-                        <select id="produto" name="Produto" data-label="Serviço"></select>
-                    </div>
-
-                    <div class="input-field col s6">
-                        <i class="material-icons prefix">control_point</i>
-                        <label for="quantProduto">Quantidade do Produto</label>
-                        <select id="quantProduto" name="quantProduto" data-label="Serviço"></select>
-                    </div>
-                </div>
-
-                <div class="input-field col s6">
-                    <i class="material-icons prefix">add_shopping_cart</i>
-                    <label for="servico">Serviço</label>
-                    <select id="servico" name="servico" class="browser-default" data-label="Serviço"></select>
-
-                </div>
-                <div id="results" class="input-field col s12">
-                    <i class="material-icons prefix">dashboard</i>
-                    <input id="valortotal">
-                    <label for="resultado">Valor total:</label>
-                </div>
-                <div class="col s3">
-                    <a id="btn_salvarPet" class="waves-effect waves-light btn">Enviar</a>
-                </div>
-                <div class="col s3">
-                    <a id="btn_voltarPet" class="waves-effect waves-light btn">Voltar</a>
-                </div>
-            </div>
-        </form>
     </div>
+
+    <form id="pedidoForm">
+        <div class="row">
+
+            <!-- Campo Cliente -->
+            <div id="tutorListDiv" class="input-field col s6">
+                <select name="tutorId" id="tutorId" class="browser-default" data-label="Tutor" required>
+                    <!-- lista dinamica de tutores -->
+                </select><br>
+            </div>
+
+            <!-- Campo Nome do Pet -->
+            <div id="petListDiv" class="input-field col s6">
+                <select name="petId" id="petId" class="browser-default" data-label="Pet" required>
+                    <!-- lista dinamica de pets -->
+                </select><br>
+            </div>
+
+            <!-- Card Produtos -->
+            <div id="produtos_container">
+                <div id="btn_produtoAdd" class="col s3">
+                    <a class="waves-effect waves-light btn" style="margin-bottom: 10px;">Adicionar Produto</a>
+                </div>
+                <!-- Lista de produtos será criada aqui ao clicar no botão acima dentro de "produtos_container" e escondendo o "btn_produtoAdd"-->
+            </div>
+
+            <!-- Card Serviços -->
+            <div id="servicos_container">
+                <div id="btn_servicoAdd" class="col s3">
+                    <a class="waves-effect waves-light btn" style="margin-bottom: 10px;">Adicionar Serviço</a>
+                </div>
+                <!-- Lista de serviços será criada aqui ao clicar no botão acima dentro de "servicos_container" e escondendo o "btn_servicoAdd"-->
+            </div>
+
+            <div class="row s12">
+                <div class="col s3">
+                    <a id="btn_enviarPedido" class="waves-effect waves-light btn">Enviar</a>
+                </div>
+                <div class="col s3">
+                    <a id="btn_voltarPedido" class="waves-effect waves-light btn">Voltar</a>
+                </div>
+
+            </div>
+            <div id="results" class="input-field col s12">
+                <i class="material-icons prefix">dashboard</i>
+                <a href="#!" class="collection-item"><span class="badge precoServico">0</span>R$</a>
+                <label>Valor Total:</label>
+            </div>
+        </div>
+    </form>
 
     <table id="table_pedido">
         <thead>
@@ -61,7 +63,7 @@
                 <th>Número da nota</th>
                 <th>Tutor</th>
                 <th>Valor Total</th>
-                <th>Situação</th>               
+                <th>Situação</th>
             </tr>
         </thead>
 
