@@ -6,14 +6,10 @@ import { alerts } from "./alerts.js";
 
 let produtos = []; // array final com a lista de produtos
 let quantidadeProdutos = []; // quantidade de cada produto
-let produtosLista = []; // array com a lista de todos os produtos no banco de dados
-let produtoId = 0; // id do produto (apenas para gerar um id único para cada produto dentro do html dinâmico)
 let listaProdutos = []; // lista de produtos do pedido
 
 let servicos = [];
 let quantidadeServicos = [];
-let servicosLista = [];
-let servicoId = 0;
 let listaServicos = [];
 
 const botoesPet = () => { // botões para a tela de pets
@@ -232,11 +228,12 @@ function atualizarValoresProduto() {
     });
 }
 
-function cardProduto() { // cria um card para um único produto
-    crud.carregar(`products/`).then((data) => { // contém a lista de todos os produtos no banco de dados
-        let options = '<option value="" disabled selected>Selecione um Produto</option>';
+function cardProduto(produtoId = null, quantidade = 1) { // recupera o card do backend e preenche os campos ou cria um novo card
+    crud.carregar(`products/`).then((data) => {
+        let options = '<option value="" disabled>Selecione um Produto</option>';
         for (let i = 0; i < data.length; i++) {
-            options += `<option value="${data[i].id}" data-price="${data[i].price}">${data[i].name}</option>`;
+            const selected = produtoId == data[i].id ? 'selected' : '';
+            options += `<option value="${data[i].id}" data-price="${data[i].price}" ${selected}>${data[i].name}</option>`;
         }
 
         const novoItem = $(`
@@ -256,7 +253,7 @@ function cardProduto() { // cria um card para um único produto
                         </div>
                         <div class="input-field col s2">
                             <i class="material-icons prefix">control_point</i>
-                            <input class="quantProduto" type="number" min="1" class="validate" value="1">
+                            <input class="quantProduto" type="number" min="1" class="validate" value="${quantidade}">
                             <label class="active">Quantidade</label>
                         </div>
                         <div class="input-field col s3">
@@ -274,6 +271,10 @@ function cardProduto() { // cria um card para um único produto
         `);
 
         $('#produtos_container').append(novoItem);
+
+        // Atualiza valores do card
+        novoItem.find('select[name="Produto"]').val(produtoId).trigger('change');
+        novoItem.find('.quantProduto').val(quantidade).trigger('change');
         atualizarListaQuantidadesProdutos();
         atualizarListaProdutos();
     });
@@ -301,11 +302,9 @@ function produtosCorpo(qtd, prod) { // cria um array com a lista dos produtos pa
     }
 }
 
-// funções para serviços
 function addCardServico() {
     $(document).on('click', '#btn_servicoAdd, .btnAdicionarServico', function () {
         cardServico();
-
         if ($(this).hasClass("btnAdicionarServico")) {
             $(".btnAdicionarServico").hide();
             $(".btnRemoverServico").show();
@@ -337,11 +336,12 @@ function atualizarValoresServico() {
     });
 }
 
-function cardServico() { // cria um card para um único servico
-    crud.carregar(`services/`).then((data) => { // contém a lista de todos os servicos no banco de dados
-        let options = '<option value="" disabled selected>Selecione um Servico</option>';
+function cardServico(servicoId = null, quantidade = 1) {
+    crud.carregar(`services/`).then((data) => {
+        let options = '<option value="" disabled>Selecione um Servico</option>';
         for (let i = 0; i < data.length; i++) {
-            options += `<option value="${data[i].id}" data-price="${data[i].price}">${data[i].name}</option>`;
+            const selected = servicoId == data[i].id ? 'selected' : '';
+            options += `<option value="${data[i].id}" data-price="${data[i].price}" ${selected}>${data[i].name}</option>`;
         }
 
         const novoItem = $(`
@@ -361,7 +361,7 @@ function cardServico() { // cria um card para um único servico
                         </div>
                         <div class="input-field col s2">
                             <i class="material-icons prefix">control_point</i>
-                            <input class="quantServico" type="number" min="1" class="validate" value="1">
+                            <input class="quantServico" type="number" min="1" class="validate" value="${quantidade}">
                             <label class="active">Quantidade</label>
                         </div>
                         <div class="input-field col s3">
@@ -379,6 +379,9 @@ function cardServico() { // cria um card para um único servico
         `);
 
         $('#servicos_container').append(novoItem);
+
+        novoItem.find('select[name="Servico"]').val(servicoId).trigger('change');
+        novoItem.find('.quantServico').val(quantidade).trigger('change');
         atualizarListaQuantidadesServicos();
         atualizarListaServicos();
     });
@@ -418,5 +421,7 @@ export const buttons = {
     quantidadeServicos,
     produtosCorpo,
     servicosCorpo,
-    limparCards
+    limparCards,
+    cardProduto,
+    cardServico
 };

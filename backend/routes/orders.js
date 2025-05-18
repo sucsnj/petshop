@@ -138,7 +138,7 @@ router.get('/:id', function (req, res, next) {
  *      400:
  *        description: Dados inválidos
  */
-router.post('/', autenticarToken, (req, res) => {
+router.post('/', (req, res) => {
   criarPedido(req, res);
 });
 
@@ -183,7 +183,7 @@ router.post('/', autenticarToken, (req, res) => {
  *      404:
  *        description: Pedido não encontrado
  */
-router.patch('/:id', autenticarToken, (req, res) => {
+router.patch('/:id', (req, res) => {
   atualizarPedido(req, res);
 });
 

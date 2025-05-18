@@ -2,7 +2,7 @@ import { tools } from './tools.js';
 import { vars } from './vars.js';
 import { lists } from './lists.js'; // funções para listas dinâmicas
 import { alerts } from './alerts.js';
-import { buttons } from './buttons.js'; // temporário TODO
+import { buttons } from './buttons.js';
 
 function menuAdd(formulario) { // menu de adição
     const form = document.getElementById(formulario);
@@ -24,33 +24,34 @@ function menuAdd(formulario) { // menu de adição
 
 function menuEdit(id, form, endpoint) { // menu de edição, está sendo chamado por uma lista dinâmica
     alerts.verificarLogin().then((resultado) => {
-        if (!resultado) {
-            return;
-        } else {
-            const esconder = [ // elementos a serem escondidos
-                `#table_pet`,
-                `#table_tutor`,
-                `#table_produto`,
-                `#table_servico`,
-                `#table_pedido`,
-                `#btn_novoPet`,
-                `#btn_novoTutor`,
-                `#btn_novoProduto`,
-                `#btn_novoServico`,
-                `#btn_novoPedido`,
-            ];
-            esconder.forEach(item => $(item).hide()) // faz um for dentro de 'esconder' para aplicar hide() em tudo que encontrar 
-            // > 'item' é o equivalente a qualquer item dentro de 'esconder'
-            $(`#${form}`).show(); // mostra o formulário
+        if (!resultado) return;
 
-            fetch(url + endpoint + id)
-                .then((res) => {
-                    return res.json()
-                })
-                .then((data) => {
-                    if (Array.isArray(data)) { // se a resposta for um array, pega o primeiro [0], usado para preencher os campos
-                        data = data[0];
-                    }
+        const esconder = [ // elementos a serem escondidos
+            `#table_pet`,
+            `#table_tutor`,
+            `#table_produto`,
+            `#table_servico`,
+            `#table_pedido`,
+            `#btn_novoPet`,
+            `#btn_novoTutor`,
+            `#btn_novoProduto`,
+            `#btn_novoServico`,
+            `#btn_novoPedido`,
+        ];
+        esconder.forEach(item => $(item).hide()) // faz um for dentro de 'esconder' para aplicar hide() em tudo que encontrar 
+        // > 'item' é o equivalente a qualquer item dentro de 'esconder'
+        $(`#${form}`).show(); // mostra o formulário
+
+        fetch(url + endpoint + id)
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                if (Array.isArray(data)) data = data[0];
+
+                if (form === "pedidoForm") {
+                    preencherPedidoEdit(data);
+                } else {
                     tools.listaSuspensa(`tutors`, `tutorId`, `Tutor`).then(() => {
                         $(`#tutorId`).val(data.tutorId).trigger("change");
                     });
@@ -61,7 +62,7 @@ function menuEdit(id, form, endpoint) { // menu de edição, está sendo chamado
                         tutorForm: () => { vars.tutorId = id },
                         produtoForm: () => { vars.prodId = id },
                         servicoForm: () => { vars.servId = id },
-                        pedidoForm: () => { vars.prodId = id },
+                        pedidoForm: () => { vars.pedId = id },
                     }
                     if (ids[form]) {
                         ids[form](); // chama a função correspondente ao form dentro de 'ids'
@@ -70,9 +71,32 @@ function menuEdit(id, form, endpoint) { // menu de edição, está sendo chamado
                     for (let campoName in data) { // aqui será preenchido o 'form'
                         tools.ativarClassesDeInputPreencher(`[name="${campoName}"]`, data[campoName]);
                     }
-                })
-        }
+                }
+            });
     });
+}
+
+function preencherPedidoEdit(data) {
+    // preenche apenas os campos de tutor e pet
+    $('#tutorId').val(data.tutorId).trigger('change');
+    $('#petId').val(data.petId).trigger('change');
+    buttons.limparCards();
+
+    const prodIds = JSON.parse(data.productIds);
+    const prodQtds = data.prodQtds.split(',').map(Number);
+    for (let i = 0; i < prodIds.length; i++) {
+        buttons.cardProduto(prodIds[i], prodQtds[i]);
+    }
+
+    const servIds = JSON.parse(data.serviceIds);
+    const servQtds = data.servQtds.split(',').map(Number);
+    for (let i = 0; i < servIds.length; i++) {
+        buttons.cardServico(servIds[i], servQtds[i]);
+    }
+
+    // preenche os outros campos caso necessário
+    $('#status').val(data.status).trigger('change');
+    $('#total').val(data.total);
 }
 
 async function carregar(endpoint) { // faz um GET e ordena alfabeticamente >> usando async/await
@@ -121,7 +145,7 @@ function gravar(endpoint, form) { // faz um POST
 }
 
 function atualizarPorId(id, endpoint, form) { // faz um PATCH
-    let json = JSON.stringify(tools.pegarForm(form));
+    json = JSON.stringify(tools.pegarForm(form));
     fetch(url + endpoint + id, {
         method: 'PATCH',
         headers: {

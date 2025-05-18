@@ -9,7 +9,7 @@ function telaInicial() { // exibe a tela inicial
         `tutorForm`,
         `produtoForm`,
         `servicoForm`,
-
+        `pedidoForm`,
     ];
     removerRequired.forEach(item => tools.removerAttrRequired(item)); // executa a função removerAttrRequired() para cada item do array
 
