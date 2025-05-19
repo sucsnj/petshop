@@ -185,6 +185,18 @@ const botoesPedido = () => { // botões para a tela de pedidos
     atualizarValoresServico();
 }
 
+$(document).on('click', function () { // atualiza o total do pedido constantemente
+    atualizarTotalPedido();
+    let valor = $('#totalPedido').text();
+    if (valor == 0) {
+        $("#btn_salvarPedido").attr('disabled', 'disabled');
+        $("#btn_finalizarPedido").attr('disabled', 'disabled');
+    } else {
+        $("#btn_salvarPedido").attr('disabled', false);
+        $("#btn_finalizarPedido").attr('disabled', false);
+    }
+});
+
 function limparCards() {
     $('.card.produtos').remove(); // Remove todos os cards de produtos
     $('.card.servicos').remove(); // Remove todos os cards de produtos
@@ -192,6 +204,13 @@ function limparCards() {
     atualizarListaProdutos();
     atualizarListaQuantidadesServicos();
     atualizarListaServicos();
+}
+
+function atualizarTotalPedido() { // calcula o valor total do pedido
+    let produtos = atualizarTotalProdutos();
+    let servicos = atualizarTotalServicos();
+    let total = produtos + servicos;
+    $('#totalPedido').text(total.toFixed(2));
 }
 
 // funções para produtos
@@ -303,6 +322,15 @@ function produtosCorpo(qtd, prod) { // cria um array com a lista dos produtos pa
     }
 }
 
+function atualizarTotalProdutos() { // soma o valor de todos os cards de produtos
+    let total = 0;
+    $('.totalProduto').each(function () {
+        const valor = Number($(this).text()) || 0;
+        total += valor;
+    });
+    return total;
+}
+
 function addCardServico() {
     $(document).on('click', '#btn_servicoAdd, .btnAdicionarServico', function () {
         cardServico();
@@ -408,6 +436,15 @@ function servicosCorpo(qtd, serv) { // cria um array com a lista dos servicos pa
     for (let i = 0; i < qtd.length; i++) {
         servicos.push(...Array(qtd[i]).fill(serv[i]));
     }
+}
+
+function atualizarTotalServicos() { // soma o valor de todos os cards de serviços
+    let total = 0;
+    $('.totalServico').each(function () {
+        const valor = Number($(this).text()) || 0;
+        total += valor;
+    });
+    return total;
 }
 
 export const buttons = {

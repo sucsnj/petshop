@@ -1,5 +1,12 @@
 import { start } from './start.js';
 
+const token = localStorage.getItem('token'); // Obtém o token armazenado
+$(document).on('click', function () {
+    if (token) {
+        verificarToken();
+    }
+});
+
 async function mensagemAcesso() {
     return Swal.fire({
         icon: 'error',
@@ -53,8 +60,36 @@ async function mensagemCampo(campo) {
     });
 }
 
+function sessaoExpirou() {
+    Swal.fire({
+        icon: 'error',
+        title: 'Sessão expirada',
+        toast: true,
+        position: 'top-end',
+        text: 'Sua sessão expirou, por favor, faça o login novamente.',
+        confirmButtonText: 'Ok',
+        showConfirmButton: false
+    });
+}
+
+function verificarToken() {
+    const tokenJSON = JSON.parse(atob(token.split('.')[1]));
+    const tempoRestante = tokenJSON.exp * 1000 - Date.now();
+
+    if (tempoRestante < 0) {
+        localStorage.removeItem('token');
+        sessaoExpirou();
+        setTimeout(() => {
+            window.location.href = '/login';
+        }, 3000);
+    }
+}
+
 async function verificarLogin() {
-    const token = localStorage.getItem('token'); // Obtém o token armazenado
+    if (token) {
+        verificarToken();
+    }
+
     if (!token) {
         mensagemAcesso().then((result) => {
             if (result.isConfirmed) {

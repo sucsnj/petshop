@@ -121,7 +121,7 @@ function criarPedido(req, res) {
                     (tutorId, petId, products, services, total, status)
                     values
                     (?, ?, ?, ?, ?, ?)`,
-        [corpo.tutorId, corpo.petId || null, prod || null, serv || null, 0, "Pendente"],
+        [corpo.tutorId, corpo.petId || null, prod || null, serv || null, 0, corpo.status || "Pendente"],
         function (err) {
             if (err) {
                 console.error(err);

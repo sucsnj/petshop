@@ -132,6 +132,8 @@ router.get('/:id', function (req, res, next) {
  *                type: array
  *                items:
  *                  type: string
+ *              status:
+ *                type: string
  *    responses:
  *      201:
  *        description: Pedido criado com sucesso

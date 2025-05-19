@@ -38,7 +38,8 @@ function telaInicial() { // exibe a tela inicial
             $("#btn_novoServico").show();
             $("#table_servico").show();
         },
-        5: () => { // TODO implentar pedidos
+        5: () => {
+            // lists.listaPedido();
             tools.listaDinamica(`orders/`, `pedido_list`, lists.listaPedido);
             buttons.limparCards();
             $("#pedidoForm").hide();

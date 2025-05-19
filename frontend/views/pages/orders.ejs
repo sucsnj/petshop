@@ -19,7 +19,7 @@
 
             <!-- Campo Nome do Pet -->
             <div id="petListDiv" class="input-field col s6">
-                <select name="petId" id="petId" class="browser-default" data-label="Pet" required>
+                <select name="petId" id="petId" class="browser-default" data-label="Pet">
                     <!-- lista dinamica de pets -->
                 </select><br>
             </div>
@@ -41,17 +41,23 @@
             </div>
 
             <div class="row s12">
-                <div class="col s3">
+                <div class="col s2">
                     <a id="btn_salvarPedido" class="waves-effect waves-light btn">Enviar</a>
                 </div>
-                <div class="col s3">
+                <div class="col s2">
                     <a id="btn_voltarPedido" class="waves-effect waves-light btn">Voltar</a>
+                </div>
+                <div class="col s2">
+                    <select name="status" id="status" class="browser-default" data-label="Status">
+                        <option value="pendente">Pendente</option>
+                        <option value="finalizado">Finalizado</option>
+                    </select>
                 </div>
 
             </div>
             <div id="results" class="input-field col s12">
                 <i class="material-icons prefix">dashboard</i>
-                <a href="#!" class="collection-item"><span class="badge precoServico">0</span>R$</a>
+                <a href="#!" class="collection-item"><span id="totalPedido" class="badge precoServico">0</span>R$</a>
                 <label>Valor Total:</label>
             </div>
         </div>
@@ -68,7 +74,7 @@
         </thead>
 
         <tbody id="pedido_list">
-            <!-- lista de pets gerada aqui -->
+            <!-- lista de pedidos gerada aqui -->
         </tbody>
     </table>
 </div>

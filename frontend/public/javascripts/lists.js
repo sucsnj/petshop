@@ -91,24 +91,60 @@ function listaServico(data) { // carrega a lista de serviços
     return lista;
 }
 
-function listaPedido(data) {
-    // implementar a lista de pedidos TODO
+// function listaPedidoSemTutor(data) { // inutilizada
+//     let endpoint = `orders/`;
+//     let finalizado = data.status === "finalizado" ? "disabled" : ""; // se o status estiver como 'finalizado', desabilita o botão menuEdit() pelo css
+//     let lista = `<tr>
+//                         <td>${data.id}</td>
+//                         <td>${data.tutorId}</td>
+//                         <td>${data.total}</td>
+//                         <td>${data.status}</td>
+
+//                         <td>
+//                         <a onclick="crud.menuEdit(${data.id}, '${`pedidoForm`}', '${endpoint}')" 
+//                         class="btn-floating btn-small waves-effect waves-light green ${finalizado}"><i class="material-icons">edit</i></a> 
+
+//                         <a onclick="crud.deletarPorId('${endpoint}',${data.id})" 
+//                         class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
+//                         </td>
+//                     </tr>`
+//     return lista;
+// }
+
+function listaPedido() { // carrega a lista de pets com os nomes dos tutores, dois GETs // TODO refatorar as listas abaixo
     let endpoint = `orders/`;
-    let lista = `<tr>
-                        <td>${data.id}</td>
-                        <td>${data.tutorId}</td>
-                        <td>${data.total}</td>
-                        <td>${data.status}</td>
-                        
-                        <td>
-                        <a onclick="crud.menuEdit(${data.id}, '${`pedidoForm`}', '${endpoint}')" 
-                        class="btn-floating btn-small waves-effect waves-light green"><i class="material-icons">edit</i></a> 
-                        
-                        <a onclick="crud.deletarPorId('${endpoint}',${data.id})" 
-                        class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
-                        </td>
-                    </tr>`
-    return lista;
+    crud.carregar(`tutors/`)
+        .then((tutors) => {
+            const tutorMap = new Map(); // cria um Map() para armazenar os tutores encontrados em 'tutors'
+            for (let tutor of tutors) { // preenche o Map() com os tutores
+                tutorMap.set(tutor.id, tutor.name); // coloca o id e o nome do tutor no Map()
+            }
+            crud.carregar(endpoint)
+                .then((pedidos) => {
+
+                    let lista = '';
+                    for (let pedido of pedidos) {
+                        // se o status for 'finalizado', desabilita o botão menuEdit() pelo class do css
+                        let finalizado = pedido.status === "finalizado" ? "disabled" : "";
+                        lista +=
+                            `<tr>
+                            <td>${pedido.id}</td>
+                            <td>${tutorMap.get(parseInt(pedido.tutorId))}</td>
+                            <td>${pedido.total}</td>
+                            <td>${pedido.status}</td>
+                            
+                            <td>
+                            <a onclick="crud.menuEdit(${pedido.id}, '${`pedidoForm`}', '${endpoint}')" 
+                            class="btn-floating btn-small waves-effect waves-light green ${finalizado}"><i class="material-icons">edit</i></a> 
+                            
+                            <a onclick="crud.deletarPorId('${endpoint}',${pedido.id})" 
+                            class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                            </td>
+                        </tr>`
+                    }
+                    $("#pedido_list").html(lista);
+                })
+        })
 }
 
 export const lists = {
