@@ -1,78 +1,90 @@
 <div id="pedidoMenu" class="container">
     <div class="row">
-        <h1 style="font-size: 24px;">Digite aqui o seu pedido!</h1>
+        <h1 class="blue-text text-darken-3 center-align">Digite aqui o seu pedido!</h1>
 
         <div class="col s3">
-            <a id="btn_novoPedido" class="waves-effect waves-light btn">Novo</a>
+            <a id="btn_novoPedido" class="waves-effect waves-light btn blue darken-3">
+                <i class="material-icons left">add</i>Novo
+            </a>
         </div>
     </div>
 
-    <form id="pedidoForm">
+    <form id="pedidoForm" class="card-panel blue lighten-5">
         <div class="row">
-
             <!-- Campo Cliente -->
             <div id="tutorListDiv" class="input-field col s6">
+                <i class="material-icons prefix">person</i>
                 <select name="tutorId" id="tutorId" class="browser-default" data-label="Tutor" required>
                     <!-- lista dinamica de tutores -->
-                </select><br>
+                </select>
             </div>
 
             <!-- Campo Nome do Pet -->
             <div id="petListDiv" class="input-field col s6">
+                <i class="material-icons prefix">pets</i>
                 <select name="petId" id="petId" class="browser-default" data-label="Pet">
                     <!-- lista dinamica de pets -->
-                </select><br>
+                </select>
             </div>
 
             <!-- Card Produtos -->
             <div id="produtos_container">
                 <div id="btn_produtoAdd" class="col s3">
-                    <a class="waves-effect waves-light btn" style="margin-bottom: 10px;">Adicionar Produto</a>
+                    <a class="waves-effect waves-light btn green" style="margin-bottom: 10px;">
+                        <i class="material-icons left">add_shopping_cart</i>Adicionar Produto
+                    </a>
                 </div>
-                <!-- Lista de produtos será criada aqui ao clicar no botão acima dentro de "produtos_container" e escondendo o "btn_produtoAdd"-->
             </div>
 
             <!-- Card Serviços -->
             <div id="servicos_container">
                 <div id="btn_servicoAdd" class="col s3">
-                    <a class="waves-effect waves-light btn" style="margin-bottom: 10px;">Adicionar Serviço</a>
+                    <a class="waves-effect waves-light btn orange darken-2" style="margin-bottom: 10px;">
+                        <i class="material-icons left">build</i>Adicionar Serviço
+                    </a>
                 </div>
-                <!-- Lista de serviços será criada aqui ao clicar no botão acima dentro de "servicos_container" e escondendo o "btn_servicoAdd"-->
             </div>
 
-            <div class="row s12">
+            <div class="row">
                 <div class="col s2">
-                    <a id="btn_salvarPedido" class="waves-effect waves-light btn">Enviar</a>
+                    <a id="btn_salvarPedido" class="waves-effect waves-light btn green">
+                        <i class="material-icons left">send</i>Enviar
+                    </a>
                 </div>
                 <div class="col s2">
-                    <a id="btn_voltarPedido" class="waves-effect waves-light btn">Voltar</a>
+                    <a id="btn_voltarPedido" class="waves-effect waves-light btn red">
+                        <i class="material-icons left">arrow_back</i>Voltar
+                    </a>
                 </div>
                 <div class="col s2">
+                    <i class="material-icons prefix">sync</i>
                     <select name="status" id="status" class="browser-default" data-label="Status">
                         <option value="pendente">Pendente</option>
                         <option value="finalizado">Finalizado</option>
                     </select>
                 </div>
-
             </div>
+
             <div id="results" class="input-field col s12">
-                <i class="material-icons prefix">dashboard</i>
-                <a href="#!" class="collection-item"><span id="totalPedido" class="badge precoServico">0</span>R$</a>
+                <i class="material-icons prefix">attach_money</i>
+                <a href="#!" class="collection-item">
+                    <span id="totalPedido" class="badge precoServico">0</span>R$
+                </a>
                 <label>Valor Total:</label>
             </div>
         </div>
     </form>
 
-    <table id="table_pedido">
-        <thead>
+    <table id="table_pedido" class="highlight centered striped">
+        <thead class="blue darken-3 white-text">
             <tr>
                 <th>Número da nota</th>
                 <th>Tutor</th>
                 <th>Valor Total</th>
                 <th>Situação</th>
+                <th>Ações</th>
             </tr>
         </thead>
-
         <tbody id="pedido_list">
             <!-- lista de pedidos gerada aqui -->
         </tbody>

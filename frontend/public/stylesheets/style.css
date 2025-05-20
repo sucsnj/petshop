@@ -1,13 +1,6 @@
-#loading {
-    text-align: center;
-    font-size: 18px;
-    padding: 50px;
-}
-
 html,
 body {
     height: 100%;
-    /* Garante que toda a página ocupe a altura total */
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -15,19 +8,158 @@ body {
 
 main {
     flex: 1;
-    /* Faz com que o conteúdo ocupe o espaço disponível */
+    /* Ocupa todo o espaço disponível, empurrando o footer para baixo */
 }
 
 footer {
-    color: white;
+    width: 100%;
+    padding: 20px;
     text-align: center;
+    background: #1565c0;
+    color: white;
 }
 
-.card-Produtos {
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  padding: 20px;
-  margin: 20px 0;
-  background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.footer-links {
+    display: flex;
+    justify-content: center;
+    /* Centraliza os links na horizontal */
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin: 0 15px;
+    /* Espaçamento uniforme entre os links */
+}
+
+.footer-copyright .container {
+    padding: 5px 0;
+    /* Reduz a altura da div para ocupar o mínimo necessário */
+}
+
+.nav-link {
+    display: flex;
+    align-items: center; /* Alinha os ícones e textos na horizontal */
+    gap: 5px; /* Adiciona um espaçamento entre o ícone e o nome */
+}
+
+.nav-link i {
+    font-size: 20px; /* Ajusta o tamanho dos ícones */
+}
+
+.nav-link span {
+    font-size: 16px; /* Define um tamanho adequado para os textos */
+}
+
+
+/* Responsividade geral */
+@media screen and (max-width: 1024px) {
+    .container {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h5 {
+        font-size: 1.4rem;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    .input-field input {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .footer-links {
+        flex-wrap: wrap;
+        /* Permite que os links se ajustem caso o espaço seja menor */
+        justify-content: center;
+        gap: 10px;
+        /* Adiciona espaçamento entre os itens */
+    }
+
+    .footer-links li {
+        margin: 5px 10px;
+    }
+
+    .footer-copyright .container {
+        padding: 8px 0;
+        /* Mantém espaço mínimo sem comprometer a legibilidade */
+        font-size: 0.9rem;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    h5 {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .input-field input {
+        font-size: 0.95rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h5 {
+        font-size: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .input-field {
+        width: 100%;
+    }
+
+    .card {
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+
+    .btn-floating {
+        margin-top: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .footer-links li {
+        margin: 5px 0;
+    }
+
+    .footer-copyright .container {
+        padding: 6px 0;
+        font-size: 0.8rem;
+        /* Reduz o tamanho do texto para telas compactas */
+    }
 }

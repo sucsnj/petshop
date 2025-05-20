@@ -15,20 +15,24 @@ function listaPet() { // carrega a lista de pets com os nomes dos tutores, dois 
                     let lista = '';
                     for (let pet of pets) {
                         lista +=
-                            `<tr>
-                            <td>${pet.name}</td>
-                            <td>${pet.species}</td>
-                            <td>${pet.age}</td>
-                            <td>${tutorMap.get(parseInt(pet.tutorId))}</td>
-                            
-                            <td>
-                            <a onclick="crud.menuEdit(${pet.id}, '${`petForm`}', '${endpoint}')" 
-                            class="btn-floating btn-small waves-effect waves-light green"><i class="material-icons">edit</i></a> 
-                            
-                            <a onclick="crud.deletarPorId('${endpoint}',${pet.id})" 
-                            class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
-                            </td>
-                        </tr>`
+                            `<tr class="hoverable">
+    <td class="blue-text text-darken-3"><strong>${pet.name}</strong></td>
+    <td class="blue-text text-darken-2">${pet.species}</td>
+    <td class="green-text text-darken-2"><strong>${pet.age} anos</strong></td>
+    <td class="grey-text text-darken-1">${tutorMap.get(parseInt(pet.tutorId))}</td>
+    <td>
+        <a onclick="crud.menuEdit(${pet.id}, '${`petForm`}', '${endpoint}')" 
+            class="btn-floating btn-small waves-effect waves-light blue darken-2">
+            <i class="material-icons">edit</i>
+        </a>
+
+        <a onclick="crud.deletarPorId('${endpoint}', ${pet.id})" 
+            class="btn-floating btn-small waves-effect waves-light red darken-2">
+            <i class="material-icons">delete</i>
+        </a>
+    </td>
+</tr>
+`
                     }
                     $("#pet_list").html(lista);
                 })
@@ -37,57 +41,69 @@ function listaPet() { // carrega a lista de pets com os nomes dos tutores, dois 
 
 function listaTutor(data) {
     let endpoint = `tutors/`;
-    let lista = `<tr>
-            <td>${data.name}</td>
-            <td>${data.email}</td>
-            <td>${data.phone}</td>
-            
-            <td>
-                <a onclick="crud.menuEdit(${data.id}, '${`tutorForm`}', '${endpoint}')" 
-                class="btn-floating btn-small waves-effect waves-light green"><i class="material-icons">edit</i></a> 
-                
-                <a onclick="crud.deletarPorId('${endpoint}', ${data.id})"
-                class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
-            </td>
-        </tr>`
+    let lista = `<tr class="hoverable">
+    <td class="blue-text text-darken-3"><strong>${data.name}</strong></td>
+    <td class="blue-text text-darken-2">${data.email}</td>
+    <td class="green-text text-darken-2">${data.phone}</td>
+    <td>
+        <a onclick="crud.menuEdit(${data.id}, '${`tutorForm`}', '${endpoint}')" 
+            class="btn-floating btn-small waves-effect waves-light blue darken-2">
+            <i class="material-icons">edit</i>
+        </a>
+
+        <a onclick="crud.deletarPorId('${endpoint}', ${data.id})" 
+            class="btn-floating btn-small waves-effect waves-light red darken-2">
+            <i class="material-icons">delete</i>
+        </a>
+    </td>
+</tr>
+`
     return lista;
 }
 
 function listaProduto(data) { // carrega a lista de produtos
     let endpoint = `products/`;
-    let lista = `<tr>
-                        <td>${data.name}</td>
-                        <td>${data.price}</td>
-                        <td>${data.category}</td>
-                        <td>${data.stock}</td>
-                        
-                        <td>
-                        <a onclick="crud.menuEdit(${data.id}, '${`produtoForm`}', '${endpoint}')" 
-                        class="btn-floating btn-small waves-effect waves-light green"><i class="material-icons">edit</i></a> 
-                        
-                        <a onclick="crud.deletarPorId('${endpoint}',${data.id})" 
-                        class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
-                        </td>
-                    </tr>`
+    let lista = `<tr class="hoverable">
+    <td class="blue-text text-darken-3"><strong>${data.name}</strong></td>
+    <td class="green-text text-darken-2"><strong>R$ ${data.price.toFixed(2)}</strong></td>
+    <td class="blue-text text-darken-2">${data.category}</td>
+    <td class="grey-text text-darken-1">${data.stock}</td>
+    <td>
+        <a onclick="crud.menuEdit(${data.id}, '${`produtoForm`}', '${endpoint}')" 
+            class="btn-floating btn-small waves-effect waves-light blue darken-2">
+            <i class="material-icons">edit</i>
+        </a>
+
+        <a onclick="crud.deletarPorId('${endpoint}',${data.id})" 
+            class="btn-floating btn-small waves-effect waves-light red darken-2">
+            <i class="material-icons">delete</i>
+        </a>
+    </td>
+</tr>
+`
     return lista;
 }
 
 function listaServico(data) { // carrega a lista de serviços
     let endpoint = `services/`;
-    let lista = `<tr>
-                        <td>${data.name}</td>
-                        <td>${data.price}</td>
-                        <td>${data.duration}</td>
-                        <td>${data.description}</td>
-                        
-                        <td>
-                        <a onclick="crud.menuEdit(${data.id}, '${`servicoForm`}', '${endpoint}')" 
-                        class="btn-floating btn-small waves-effect waves-light green"><i class="material-icons">edit</i></a> 
-                        
-                        <a onclick="crud.deletarPorId('${endpoint}',${data.id})" 
-                        class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
-                        </td>
-                    </tr>`
+    let lista = `<tr class="hoverable">
+    <td class="blue-text text-darken-3"><strong>${data.name}</strong></td>
+    <td class="green-text text-darken-2"><strong>R$ ${data.price.toFixed(2)}</strong></td>
+    <td class="grey-text text-darken-1">${data.duration}</td>
+    <td class="blue-text text-darken-2">${data.description}</td>
+    <td>
+        <a onclick="crud.menuEdit(${data.id}, '${`servicoForm`}', '${endpoint}')" 
+            class="btn-floating btn-small waves-effect waves-light blue darken-2">
+            <i class="material-icons">edit</i>
+        </a>
+
+        <a onclick="crud.deletarPorId('${endpoint}',${data.id})" 
+            class="btn-floating btn-small waves-effect waves-light red darken-2">
+            <i class="material-icons">delete</i>
+        </a>
+    </td>
+</tr>
+`
     return lista;
 }
 
@@ -127,20 +143,24 @@ function listaPedido() { // carrega a lista de pets com os nomes dos tutores, do
                         // se o status for 'finalizado', desabilita o botão menuEdit() pelo class do css
                         let finalizado = pedido.status === "finalizado" ? "disabled" : "";
                         lista +=
-                            `<tr>
-                            <td>${pedido.id}</td>
-                            <td>${tutorMap.get(parseInt(pedido.tutorId))}</td>
-                            <td>${pedido.total}</td>
-                            <td>${pedido.status}</td>
-                            
-                            <td>
-                            <a onclick="crud.menuEdit(${pedido.id}, '${`pedidoForm`}', '${endpoint}')" 
-                            class="btn-floating btn-small waves-effect waves-light green ${finalizado}"><i class="material-icons">edit</i></a> 
-                            
-                            <a onclick="crud.deletarPorId('${endpoint}',${pedido.id})" 
-                            class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
-                            </td>
-                        </tr>`
+                            `<tr class="hoverable">
+    <td class="blue-text text-darken-3"><strong>${pedido.id}</strong></td>
+    <td class="blue-text text-darken-2">${tutorMap.get(parseInt(pedido.tutorId))}</td>
+    <td class="green-text text-darken-2"><strong>R$ ${pedido.total.toFixed(2)}</strong></td>
+    <td class="grey-text text-darken-1">${pedido.status}</td>
+    <td>
+        <a onclick="crud.menuEdit(${pedido.id}, '${`pedidoForm`}', '${endpoint}')" 
+            class="btn-floating btn-small waves-effect waves-light blue darken-2 ${finalizado}">
+            <i class="material-icons">edit</i>
+        </a>
+
+        <a onclick="crud.deletarPorId('${endpoint}',${pedido.id})" 
+            class="btn-floating btn-small waves-effect waves-light red darken-2">
+            <i class="material-icons">delete</i>
+        </a>
+    </td>
+</tr>
+`
                     }
                     $("#pedido_list").html(lista);
                 })

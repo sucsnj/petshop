@@ -257,39 +257,38 @@ function cardProduto(produtoId = null, quantidade = 1) {
             options += `<option value="${data[i].id}" data-price="${data[i].price}" ${selected}>${data[i].name}</option>`;
         }
 
-        const novoItem = $(`
-            <div class="card produtos col s12">
-                <div class="row s12">
-                    <div class="row">
-                        <div class="input-field col s4">
-                            <i class="material-icons prefix">add_shopping_cart</i>
-                            <select name="Produto" class="browser-default">
-                                ${options}
-                            </select>
-                            <label class="active">Produto</label>
-                        </div>
-                        <div class="input-field col s3">
-                            <label class="active">Preço</label>
-                            <a href="#!" class="collection-item"><span class="badge precoProduto">0</span>R$</a>
-                        </div>
-                        <div class="input-field col s2">
-                            <i class="material-icons prefix">control_point</i>
-                            <input class="quantProduto" type="number" min="1" value="${quantidade}">
-                            <label class="active">Quantidade</label>
-                        </div>
-                        <div class="input-field col s3">
-                            <label class="active">Total</label>
-                            <a href="#!" class="collection-item"><span class="badge totalProduto">0</span>R$</a>
-                        </div>
-                    </div>
-                    <div class="row s12">
-                        <div class="col s3">
-                            <a class="waves-effect waves-light btn btnRemoverProduto">Remover Produto</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `);
+        const novoItem = $(`<div class="card produtos col s12 blue lighten-5 z-depth-2">
+    <div class="row">
+        <div class="input-field col s4">
+            <i class="material-icons prefix">add_shopping_cart</i>
+            <select name="Produto" class="browser-default">
+                ${options}
+            </select>
+            <label class="active">Produto</label>
+        </div>
+        <div class="input-field col s3">
+            <label class="active">Preço</label>
+            <a href="#!" class="collection-item"><span class="badge precoProduto">0</span>R$</a>
+        </div>
+        <div class="input-field col s2">
+            <i class="material-icons prefix">control_point</i>
+            <input class="quantProduto" type="number" min="1" value="${quantidade}">
+            <label class="active">Quantidade</label>
+        </div>
+        <div class="input-field col s3">
+            <label class="active">Total</label>
+            <a href="#!" class="collection-item"><span class="badge totalProduto">0</span>R$</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s3">
+            <a class="waves-effect waves-light btn red darken-2 btnRemoverProduto">
+                <i class="material-icons left">remove_shopping_cart</i>Remover Produto
+            </a>
+        </div>
+    </div>
+</div>
+`);
 
         $('#produtos_container').append(novoItem);
 
@@ -373,39 +372,38 @@ function cardServico(servicoId = null, quantidade = 1) {
             options += `<option value="${data[i].id}" data-price="${data[i].price}" ${selected}>${data[i].name}</option>`;
         }
 
-        const novoItem = $(`
-            <div class="card servicos col s12">
-                <div class="row s12">
-                    <div class="row">
-                        <div class="input-field col s4">
-                            <i class="material-icons prefix">add_shopping_cart</i>
-                            <select name="Servico" class="browser-default">
-                                ${options}
-                            </select>
-                            <label class="active">Servico</label>
-                        </div>
-                        <div class="input-field col s3">
-                            <label class="active">Preço</label>
-                            <a href="#!" class="collection-item"><span class="badge precoServico">0</span>R$</a>
-                        </div>
-                        <div class="input-field col s2">
-                            <i class="material-icons prefix">control_point</i>
-                            <input class="quantServico" type="number" min="1" class="validate" value="${quantidade}">
-                            <label class="active">Quantidade</label>
-                        </div>
-                        <div class="input-field col s3">
-                            <label class="active">Total</label>
-                            <a href="#!" class="collection-item"><span class="badge totalServico">0</span>R$</a>
-                        </div>
-                    </div>
-                    <div class="row s12">
-                        <div class="col s3">
-                            <a class="waves-effect waves-light btn btnRemoverServico">Remover Servico</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `);
+        const novoItem = $(`<div class="card servicos col s12 blue lighten-5 z-depth-2">
+    <div class="row">
+        <div class="input-field col s4">
+            <i class="material-icons prefix">build</i>
+            <select name="Servico" class="browser-default">
+                ${options}
+            </select>
+            <label class="active">Serviço</label>
+        </div>
+        <div class="input-field col s3">
+            <label class="active">Preço</label>
+            <a href="#!" class="collection-item"><span class="badge precoServico">0</span>R$</a>
+        </div>
+        <div class="input-field col s2">
+            <i class="material-icons prefix">control_point</i>
+            <input class="quantServico" type="number" min="1" class="validate" value="${quantidade}">
+            <label class="active">Quantidade</label>
+        </div>
+        <div class="input-field col s3">
+            <label class="active">Total</label>
+            <a href="#!" class="collection-item"><span class="badge totalServico">0</span>R$</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s3">
+            <a class="waves-effect waves-light btn red darken-2 btnRemoverServico">
+                <i class="material-icons left">remove_circle</i>Remover Serviço
+            </a>
+        </div>
+    </div>
+</div>
+`);
 
         $('#servicos_container').append(novoItem);
 

@@ -1,10 +1,12 @@
 <div id="petMenu" class="container">
     <div class="row">
         <div class="col s3">
-            <a id="btn_novoPet" class="waves-effect waves-light btn">Novo</a>
+            <a id="btn_novoPet" class="waves-effect waves-light btn blue darken-3">
+                <i class="material-icons left">add</i>Novo
+            </a>
         </div>
 
-        <form id="petForm" class="col s12">
+        <form id="petForm" class="col s12 card-panel blue lighten-5"> <!-- Fundo suave para o formulário -->
             <div class="row">
                 <div class="input-field col s6">
                     <i class="material-icons prefix">pets</i>
@@ -12,32 +14,37 @@
                     <label for="name">Nome do Pet</label>
                 </div>
                 <div class="input-field col s6">
-                    <i class="material-icons prefix">android</i>
-                    <input id="species" name="species" type="tel" class="validate" data-label="Espécie">
+                    <i class="material-icons prefix">category</i>
+                    <input id="species" name="species" type="text" class="validate" data-label="Espécie">
                     <label for="species">Espécie</label>
                 </div>
                 <div class="input-field col s6">
-                    <i class="material-icons prefix">android</i>
+                    <i class="material-icons prefix">schedule</i>
                     <input id="age" name="age" type="number" class="validate" data-label="Idade">
                     <label for="age">Idade</label>
                 </div>
                 <div id="tutorListDiv" class="input-field col s6">
+                    <i class="material-icons prefix">person</i>
                     <select name="tutorId" id="tutorId" class="browser-default" data-label="Tutor" required>
                         <!-- lista dinamica de tutores -->
                     </select><br>
                 </div>
                 <div class="col s3">
-                    <a id="btn_salvarPet" class="waves-effect waves-light btn">Enviar</a>
+                    <a id="btn_salvarPet" class="waves-effect waves-light btn green">
+                        <i class="material-icons left">send</i>Enviar
+                    </a>
                 </div>
                 <div class="col s3">
-                    <a id="btn_voltarPet" class="waves-effect waves-light btn">Voltar</a>
+                    <a id="btn_voltarPet" class="waves-effect waves-light btn red">
+                        <i class="material-icons left">arrow_back</i>Voltar
+                    </a>
                 </div>
             </div>
         </form>
     </div>
 
-    <table id="table_pet">
-        <thead>
+    <table id="table_pet" class="highlight centered striped">
+        <thead class="blue darken-3 white-text">
             <tr>
                 <th>Nome</th>
                 <th>Espécie</th>
