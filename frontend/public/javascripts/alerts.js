@@ -1,7 +1,7 @@
 import { start } from './start.js';
 
 const token = localStorage.getItem('token'); // Obtém o token armazenado
-$(document).on('click', function () {
+$(document).on('click change', function () {
     if (token) {
         verificarToken();
     }

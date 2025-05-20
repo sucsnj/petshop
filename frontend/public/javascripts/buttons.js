@@ -153,6 +153,18 @@ const botoesPedido = () => { // botões para a tela de pedidos
     $("#btn_salvarPedido").on('click', function () { // tela para salvar um pedido
         produtosCorpo(quantidadeProdutos, listaProdutos);
         servicosCorpo(quantidadeServicos, listaServicos);
+        atualizarTotalPedido();
+        let valor = $('#totalPedido').text();
+        if (valor == 0) {
+            Swal.fire({
+                title: 'Pedido sem produtos ou serviços',
+                text: 'Adicione produtos ou serviços ao pedido antes de salvar.',
+                icon: 'warning',
+                showConfirmButton: true,
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
         if (vars.editar) { // verifica se é uma edição ou um novo pedido
             alerts.mensagemSalvar().then((result) => {
                 if (result.isConfirmed) {
@@ -185,16 +197,8 @@ const botoesPedido = () => { // botões para a tela de pedidos
     atualizarValoresServico();
 }
 
-$(document).on('click', function () { // atualiza o total do pedido constantemente
+$(document).on('click change', function () { // atualiza o total do pedido constantemente
     atualizarTotalPedido();
-    let valor = $('#totalPedido').text();
-    if (valor == 0) {
-        $("#btn_salvarPedido").attr('disabled', 'disabled');
-        $("#btn_finalizarPedido").attr('disabled', 'disabled');
-    } else {
-        $("#btn_salvarPedido").attr('disabled', false);
-        $("#btn_finalizarPedido").attr('disabled', false);
-    }
 });
 
 function limparCards() {

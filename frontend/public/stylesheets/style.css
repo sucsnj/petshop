@@ -39,20 +39,51 @@ footer {
 
 .nav-link {
     display: flex;
-    align-items: center; /* Alinha os ícones e textos na horizontal */
-    gap: 5px; /* Adiciona um espaçamento entre o ícone e o nome */
+    align-items: center;
+    /* Alinha os ícones e textos na horizontal */
+    gap: 5px;
+    /* Adiciona um espaçamento entre o ícone e o nome */
 }
 
 .nav-link i {
-    font-size: 20px; /* Ajusta o tamanho dos ícones */
+    font-size: 20px;
+    /* Ajusta o tamanho dos ícones */
 }
 
 .nav-link span {
-    font-size: 16px; /* Define um tamanho adequado para os textos */
+    font-size: 16px;
+    /* Define um tamanho adequado para os textos */
 }
 
 
 /* Responsividade geral */
+@media screen and (max-width: 1280px) {
+    .container {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h5 {
+        font-size: 1.4rem;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    .input-field input {
+        font-size: 1rem;
+    }
+}
+
 @media screen and (max-width: 1024px) {
     .container {
         width: 90%;
