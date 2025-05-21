@@ -200,3 +200,152 @@ footer {
         /* Reduz o tamanho do texto para telas compactas */
     }
 }
+
+/*Ajustes da aba contatos e suas imagens*/
+/* Reset geral */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Estilo dos cards */
+.cards-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+}
+
+.contact-card {
+  flex: 1;
+  margin: 0 0.5rem;
+  max-width: 18%;
+  min-width: 160px;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.contact-card img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.contact-card h6 {
+  font-size: 1.2vw;
+}
+
+.contact-card a, .contact-card p {
+  font-size: 1vw;
+}
+
+/* Responsividade - Telas até 1280px */
+@media (max-width: 1280px) {
+  .cards-wrapper {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+    overflow: hidden;
+    padding: 1rem 0.5rem;
+  }
+
+  .contact-card {
+    max-width: 22%;
+    width: 22%;
+    margin: 0.5rem;
+  }
+}
+
+/* Responsividade - Telas até 1024px */
+@media (max-width: 1024px) {
+  .contact-card {
+    max-width: 30%;
+    width: 30%;
+  }
+}
+
+/* Telas até 768px e 480px - Ajuste para não cortar os cards */
+@media (max-width: 768px) {
+  .cards-wrapper {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding: 1rem 0.5rem;
+  }
+
+  .contact-card {
+    flex-shrink: 0;
+    width: 30%;
+    min-width: 120px;
+    margin: 0 1%;
+  }
+
+  .contact-card img {
+    width: 80%;
+    max-width: 50px;
+    height: auto;
+  }
+
+  .contact-card h6 {
+    font-size: 1.3vw;
+  }
+
+  .contact-card a, .contact-card p {
+    font-size: 1.2vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-wrapper {
+    height: auto;
+    padding: 0.8rem 0.3rem;
+  }
+
+  .contact-card {
+    width: 40%;
+    min-width: 100px;
+    margin: 0 1%;
+  }
+
+  .contact-card img {
+    width: 75%;
+    max-width: 40px;
+    height: auto;
+  }
+
+  .contact-card h6 {
+    font-size: 1.5vw;
+  }
+
+  .contact-card a, .contact-card p {
+    font-size: 1.3vw;
+  }
+}
+
+/* Ajuste do footer em telas menores */
+@media (max-width: 768px) {
+  .page-footer {
+    min-height: 60px;
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-footer {
+    min-height: 70px;
+    padding: 1.4rem;
+  }
+}
