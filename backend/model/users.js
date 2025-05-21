@@ -5,10 +5,12 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 async function criarUsuario(req, res) {
-    const { username, password } = req.body;
+    const { name, username, email, password } = req.body;
 
     if (!username) return res.status(400).json({ message: 'Usuário é um campo obrigatório' });
-    if (username.length < 4) return res.status(400).json({ message: 'Usuário deve ter no mínimo 6 caracteres' });
+    if (username.length < 6) return res.status(400).json({ message: 'Usuário deve ter no mínimo 6 caracteres' });
+    if (!name) name = username;
+    if (!email) return res.status(400).json({ message: 'Email é um campo obrigatório' });
     if (password.length < 8) return res.status(400).json({ message: 'Senha deve ter no mínimo 8 caracteres' });
     if (!password) return res.status(400).json({ message: 'Senha é um campo obrigatório' });
 
@@ -20,7 +22,8 @@ async function criarUsuario(req, res) {
             if (err) return res.status(500).json({ message: 'Erro ao verificar usuário' });
             if (row) return res.status(400).json({ message: 'Usuário já existe' });
 
-            db.run(`INSERT INTO ${tabela} (username, password) VALUES (?, ?)`, [username, hashedPassword], (err) => {
+            db.run(`INSERT INTO ${tabela} (name, username, email, password) VALUES (?, ?, ?, ?)`,
+                [name, username, email, hashedPassword], (err) => {
                 if (err) return res.status(500).json({ message: 'Erro ao registrar usuário' });
                 res.json({ message: 'Usuário registrado com sucesso' });
             });
@@ -63,7 +66,8 @@ db.get(`SELECT * FROM users WHERE username = 'admin'`, async (err, row) => {
     if (!row) {
         try {
             const hashedPassword = await bcrypt.hash('admin', 10);
-            db.run(`INSERT INTO users (username, password) VALUES ('admin', ${hashedPassword})`, (err) => {
+            db.run(`INSERT INTO users (name, username, email, password) VALUES (?, ?, ?, ?)`, 
+                ['adm', 'admin', 'admin@email.com', hashedPassword], (err) => {
                 if (err) {
                     console.error('Erro ao criar admin:', err);
                     return;
