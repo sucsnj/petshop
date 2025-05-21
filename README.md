@@ -78,25 +78,33 @@ o swagger está disponível em `http://localhost:4000/api-docs`
 > Obs: O servidor backend deve estar rodando para que o swagger funcione
 
 ## Alguns comandos do git
-para adicionar os arquivos ao commit, use o comando `git add nomeDoArquivo` ou `git add .` para adicionar todos os arquivos
+`git add nomeDoArquivo` – Adiciona um arquivo específico ao staging (área de preparação para commit).
 
-para fazer o commit, use o comando `git commit -m "mensagem do commit"`
+`git add .` – Adiciona todos os arquivos modificados no diretório atual ao staging.
 
-para enviar o commit para o github, use o comando `git push origin nomeDaBranch`
+`git commit -m "mensagem do commit"` – Cria um commit com uma mensagem explicativa.
 
-para criar uma nova branch, use o comando `git branch nomeDaBranch`
+`git push origin nomeDaBranch` – Envia os commits locais da branch para o repositório remoto.
 
-para mudar de uma branch para outra, use o comando `git checkout nomeDaBranch`
+`git branch nomeDaBranch` – Cria uma nova branch localmente, mas sem trocá-la automaticamente.
 
-para mesclar uma branch com a principal, use o comando `git merge nomeDaBranch`
+`git checkout nomeDaBranch` – Alterna para a branch especificada, se já existir localmente.
 
-para subir a mesclagem das branches, use o comando `git push`
+`git checkout -b nomeDaBranch` – Cria e alterna para uma nova branch local.
 
-para recuperar uma branch, use o comando `git pull origin nomeDaBranch`
+`git checkout nomeDaBranch` (se a branch só existe no remoto) – Pode trazer uma branch remota automaticamente, caso esteja sincronizada.
 
-para reverter as alterações, use o comando `git reset --hard`
+`git merge nomeDaBranch` – Mescla a branch especificada na branch atual, integrando suas mudanças.
 
-para mesclar arquivos de uma branch no repositório git, use o comando `git merge origin/nomeDaBranch`
+`git push` – Envia todas as alterações da branch atual para o repositório remoto.
+
+`git pull origin nomeDaBranch` – Busca mudanças recentes do repositório remoto e as incorpora na branch local.
+
+`git reset --hard` – Desfaz completamente todas as alterações não commitadas e retorna à última versão commitada.
+
+`git fetch origin` – Atualiza os dados sobre as branches remotas sem modificar nada localmente.
+
+`git merge origin/nomeDaBranch` – Mescla a versão remota da branch na branch local.
 
 ## Estrutura do projeto
 ### Backend

@@ -3,6 +3,13 @@ import { tools } from './tools.js';
 import { start } from './start.js';
 import { buttons } from './buttons.js';
 import { auth } from './login.js';
+import { masks } from './imask.js';
+
+$(document).ready(function () {
+    masks.emailMask();
+    masks.phoneMask();
+    masks.ageMask();
+});
 
 $(window).on('load', function () {
 

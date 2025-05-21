@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 async function criarUsuario(req, res) {
-    const { name, username, email, password } = req.body;
+    let { name, username, email, password } = req.body;
 
     if (!username) return res.status(400).json({ message: 'Usuário é um campo obrigatório' });
     if (username.length < 6) return res.status(400).json({ message: 'Usuário deve ter no mínimo 6 caracteres' });

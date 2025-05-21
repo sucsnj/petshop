@@ -2,4 +2,3 @@ node_modules/
 .env
 database.sqlite
 consultas.sql
-.meuEnv

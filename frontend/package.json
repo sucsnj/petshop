@@ -16,6 +16,7 @@
     "express": "~4.16.1",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
+    "imask": "^7.6.1",
     "morgan": "~1.9.1",
     "sweetalert2": "^11.21.0"
   },

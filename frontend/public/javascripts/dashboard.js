@@ -1,18 +1,22 @@
 $(document).ready(function () {
 
-    $('#logout').on('click', function () {
+    $('#logout').on('click', function () { // deslogando o usuário
         localStorage.removeItem('token'); // Remove o token do usuário
         localStorage.removeItem('user'); // Remove os dados do usuário
         window.location.href = '/login'; // Redireciona para a página de login
     });
 
-    $('#register').on('click', function (event) {
+    $('#register').on('click', function (event) { // cadastrando o usuário
         event.preventDefault(); // Impede o recarregamento da página
 
         let endpoint = 'users/register';
-        const username = $('#nome').val();
+        let name = $('#nome').val();
+        const username = $('#usuario').val();
+        const email = $('#email').val();
         const password = $('#senha').val();
-        const json = JSON.stringify({ username, password });
+
+        if (!name) { name = username };
+        const json = JSON.stringify({ name, username, email, password });
 
         fetch(url + endpoint, {
             method: "POST",
