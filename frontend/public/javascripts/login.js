@@ -18,9 +18,10 @@ function login() {
 
             if (response.ok) {
                 localStorage.setItem('token', data.token); // Armazena o token no navegador
+                localStorage.setItem('user', username); // Armazena os dados do usuário
                 M.toast({ html: 'Login bem-sucedido!', classes: 'green' }); // Exibe notificação com Materialize
                 setTimeout(() => {
-                    window.location.href = '/dashboard'; // Redireciona para página protegida
+                    window.location.href = '/'; // Redireciona para página inicial após 1 segundo
                 }, 1000);
             } else {
                 M.toast({ html: data.message, classes: 'red' }); // Exibe mensagem de erro

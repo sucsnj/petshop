@@ -11,6 +11,12 @@ main {
     /* Ocupa todo o espaço disponível, empurrando o footer para baixo */
 }
 
+#loading {
+    text-align: center;
+    font-size: 18px;
+    padding: 50px;
+}
+
 footer {
     width: 100%;
     padding: 20px;

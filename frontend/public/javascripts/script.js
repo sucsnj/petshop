@@ -13,6 +13,16 @@ $(window).on('load', function () {
     if (vars.route === 'login') {
         auth.login(); // Executa a lógica de login apenas na página de login
     }
+    if (vars.route === 'login' && token) { // se o usuário estiver logado e tentar acessar a tela de login
+        window.location.href = '/dashboard'; // manda para a tela de dashboard
+    }
+    if (token) {
+        $(".login_logout").hide();
+        $(".dashboard").show();
+    } else {
+        $(".login_logout").show();
+        $(".dashboard").hide();
+    }
 
     tools.telaDeCarregamento(800); // tela de loading
     vars.tab = 0

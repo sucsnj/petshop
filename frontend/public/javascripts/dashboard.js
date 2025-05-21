@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     $('#logout').on('click', function () {
         localStorage.removeItem('token'); // Remove o token do usuário
+        localStorage.removeItem('user'); // Remove os dados do usuário
         window.location.href = '/login'; // Redireciona para a página de login
     });
 
