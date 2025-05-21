@@ -3,43 +3,99 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=2">
   <title>API PetShop</title>
+
+  <!-- Importando Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    h1 {
+      color: #080808;
+      font-size: 1.8rem;
+    }
+
+    .btn-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn {
+      min-width: 150px;
+      margin: 5px;
+      max-width: 200px;
+    }
+
+    .github-link {
+      margin-top: 15px;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Bem vindo a API da <a href="https://c2j8xrl2-5000.brs.devtunnels.ms/" target="_blank">PetShop</a></h1>
-  <p>Os endpoints disponíveis são:</p>
+  <div class="container">
+    <h1>Bem-vindo à API da <a href="<%= process.env.FRONTEND_URL %>" target="_blank">PetShop</a></h1>
 
-  <ul>
-    <li><a href="/tutors" target="_blank">tutors</a></li>
-    <li><a href="/pets" target="_blank">pets</a></li>
-    <li><a href="/products" target="_blank">products</a></li>
-    <li><a href="/services" target="_blank">services</a></li>
-    <li><a href="/orders" target="_blank">orders</a></li>
-    <li><a href="/api-docs" target="_blank">swagger</a></li>
-  </ul>
-  <p>Cada endpoint possui seus respectivos métodos:</p>
-  <ul>
-    <li><a href="#">GET</a></li>
-    <li><a href="#">GET por ID</a></li>
-    <li><a href="#">POST</a></li>
-    <li><a href="#">PATCH</a></li>
-    <li><a href="#">DELETE</a></li>
-  </ul>
+    <p>Endpoints disponíveis:</p>
+    <div class="btn-container">
+      <a href="/tutors" class="btn grey darken-1" target="_blank">Tutors</a>
+      <a href="/pets" class="btn grey darken-1" target="_blank">Pets</a>
+      <a href="/products" class="btn grey darken-1" target="_blank">Products</a>
+      <a href="/services" class="btn grey darken-1" target="_blank">Services</a>
+      <a href="/orders" class="btn grey darken-1" target="_blank">Orders</a>
+      <a href="/api-docs" class="btn grey darken-1" target="_blank">Swagger</a>
+    </div>
 
-  <h3>Para saber mais sobre o projeto, acesse o repositório no github: <a href="https://github.com/sucsnj/petshop"
-      target="_blank">PetShop</a></h3>
+    <p>Métodos disponíveis:</p>
+    <div class="btn-container">
+      <a class="btn grey">GET</a>
+      <a class="btn grey">GET por ID</a>
+      <a class="btn grey">POST</a>
+      <a class="btn grey">PATCH</a>
+      <a class="btn grey">DELETE</a>
+    </div>
 
-  <ul>
-    <p>Projeto desenvolvido por:</p>
-    <li><a href="https://github.com/AlysonThadeu" target="_blank">Alyson Thadeu</a></p>
-    <li><a href="https://github.com/Ryuki49" target="_blank">Anthony Richard</a></p>
-    <li><a href="https://github.com/sucsnj" target="_blank">Carlos Santana</a></p>
-    <li><a href="https://github.com/Edvan-Junior" target="_blank">Edvan Cordeiro</a></p>
-    <li><a href="https://github.com/RogensRocha" target="_blank">Rogens Emanuel</a></p>
-  </ul>
+    <div class="github-link">
+      <h5>Repositório do projeto:</h5>
+      <a href="https://github.com/sucsnj/petshop" target="_blank" class="btn grey darken-2">PetShop</a>
+    </div>
 
+    <h5>Desenvolvedores:</h5>
+    <div class="btn-container">
+      <a href="https://github.com/AlysonThadeu" class="btn grey darken-3" target="_blank">Alyson Thadeu</a>
+      <a href="https://github.com/Ryuki49" class="btn grey darken-3" target="_blank">Anthony Richard</a>
+      <a href="https://github.com/sucsnj" class="btn grey darken-3" target="_blank">Carlos Santana</a>
+      <a href="https://github.com/Edvan-Junior" class="btn grey darken-3" target="_blank">Edvan Cordeiro</a>
+      <a href="https://github.com/RogensRocha" class="btn grey darken-3" target="_blank">Rogens Emanuel</a>
+    </div>
+  </div>
+
+  <!-- Importando Materialize JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 </html>
