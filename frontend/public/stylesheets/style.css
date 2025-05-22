@@ -1,220 +1,92 @@
+/* Reset geral */
 html,
 body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-main {
-    flex: 1;
-    /* Ocupa todo o espaço disponível, empurrando o footer para baixo */
-}
-
-#loading {
-    text-align: center;
-    font-size: 18px;
-    padding: 50px;
-}
-
-footer {
-    width: 100%;
-    padding: 20px;
-    text-align: center;
-    background: #1565c0;
-    color: white;
-}
-
-.footer-links {
-    display: flex;
-    justify-content: center;
-    /* Centraliza os links na horizontal */
-    list-style: none;
-    padding: 0;
-}
-
-.footer-links li {
-    margin: 0 15px;
-    /* Espaçamento uniforme entre os links */
-}
-
-.footer-copyright .container {
-    padding: 5px 0;
-    /* Reduz a altura da div para ocupar o mínimo necessário */
-}
-
-.nav-link {
-    display: flex;
-    align-items: center;
-    /* Alinha os ícones e textos na horizontal */
-    gap: 5px;
-    /* Adiciona um espaçamento entre o ícone e o nome */
-}
-
-.nav-link i {
-    font-size: 20px;
-    /* Ajusta o tamanho dos ícones */
-}
-
-.nav-link span {
-    font-size: 16px;
-    /* Define um tamanho adequado para os textos */
-}
-
-
-/* Responsividade geral */
-@media screen and (max-width: 1280px) {
-    .container {
-        width: 90%;
-    }
-
-    h1 {
-        font-size: 2.5rem;
-    }
-
-    h5 {
-        font-size: 1.4rem;
-    }
-
-    .btn {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-    }
-
-    table {
-        font-size: 0.9rem;
-    }
-
-    .input-field input {
-        font-size: 1rem;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .container {
-        width: 90%;
-    }
-
-    h1 {
-        font-size: 2.5rem;
-    }
-
-    h5 {
-        font-size: 1.4rem;
-    }
-
-    .btn {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-    }
-
-    table {
-        font-size: 0.9rem;
-    }
-
-    .input-field input {
-        font-size: 1rem;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .footer-links {
-        flex-wrap: wrap;
-        /* Permite que os links se ajustem caso o espaço seja menor */
-        justify-content: center;
-        gap: 10px;
-        /* Adiciona espaçamento entre os itens */
-    }
-
-    .footer-links li {
-        margin: 5px 10px;
-    }
-
-    .footer-copyright .container {
-        padding: 8px 0;
-        /* Mantém espaço mínimo sem comprometer a legibilidade */
-        font-size: 0.9rem;
-    }
-
-    h1 {
-        font-size: 2.2rem;
-    }
-
-    h5 {
-        font-size: 1.2rem;
-    }
-
-    .btn {
-        padding: 6px 12px;
-        font-size: 0.85rem;
-    }
-
-    .card {
-        padding: 15px;
-    }
-
-    .input-field input {
-        font-size: 0.95rem;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    h5 {
-        font-size: 1rem;
-    }
-
-    .btn {
-        width: 100%;
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    .input-field {
-        width: 100%;
-    }
-
-    .card {
-        padding: 10px;
-        border-radius: 5px;
-    }
-
-
-    .btn-floating {
-        margin-top: 5px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-
-    .footer-links li {
-        margin: 5px 0;
-    }
-
-    .footer-copyright .container {
-        padding: 6px 0;
-        font-size: 0.8rem;
-        /* Reduz o tamanho do texto para telas compactas */
-    }
-}
-
-/*Ajustes da aba contatos e suas imagens*/
-/* Reset geral */
-html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-/* Estilo dos cards */
+/* Layout Principal */
+main {
+  flex: 1;
+}
+
+/* Estilos gerais */
+#loading {
+  text-align: center;
+  font-size: 18px;
+  padding: 50px;
+}
+
+footer {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  background: #1565c0;
+  color: white;
+}
+
+/* Links do rodapé */
+.footer-links {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-links li {
+  margin: 5px 10px;
+}
+
+.footer-copyright .container {
+  padding: 5px 0;
+  font-size: 0.9rem;
+}
+
+/* Navegação */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-link i {
+  font-size: 20px;
+}
+
+.nav-link span {
+  font-size: 16px;
+}
+
+/* Formulários */
+select.browser-default,
+.ajuste-status select.browser-default {
+  padding-left: 40px;
+  height: 3rem;
+  width: 100%;
+}
+
+.input-field select.browser-default+i.prefix,
+.ajuste-status i.prefix {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+/* Cartões de contato */
 .cards-wrapper {
   display: flex;
   justify-content: space-between;
@@ -239,18 +111,59 @@ html, body {
   margin-bottom: 10px;
 }
 
-.contact-card h6 {
+.contact-card h6,
+.contact-card a,
+.contact-card p {
   font-size: 1.2vw;
 }
 
-.contact-card a, .contact-card p {
-  font-size: 1vw;
+.ajuste-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Se precisar centralizar */
+  margin: 0;
+  /* Ajuste para alinhamento */
 }
 
-/* Responsividade - Telas até 1280px */
-@media (max-width: 1280px) {
+.ajuste-status select.browser-default {
+  padding-left: 40px;
+  height: 3rem;
+  width: 100%;
+}
+
+.ajuste-status i.prefix {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Responsividade */
+@media screen and (max-width: 1280px) {
+  .container {
+    width: 90%;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h5 {
+    font-size: 1.4rem;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  table,
+  .input-field input {
+    font-size: 0.9rem;
+  }
+
   .cards-wrapper {
-    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     height: auto;
@@ -265,85 +178,102 @@ html, body {
   }
 }
 
-/* Responsividade - Telas até 1024px */
-@media (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   .contact-card {
     max-width: 30%;
     width: 30%;
   }
 }
 
-/* Telas até 768px e 480px - Ajuste para não cortar os cards */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h5 {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
   .cards-wrapper {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    height: auto;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    padding: 1rem 0.5rem;
   }
 
   .contact-card {
     flex-shrink: 0;
     width: 30%;
     min-width: 120px;
-    margin: 0 1%;
   }
 
   .contact-card img {
-    width: 80%;
     max-width: 50px;
-    height: auto;
   }
 
   .contact-card h6 {
     font-size: 1.3vw;
   }
 
-  .contact-card a, .contact-card p {
+  .contact-card a,
+  .contact-card p {
     font-size: 1.2vw;
   }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  .btn {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+  }
+
   .cards-wrapper {
-    height: auto;
     padding: 0.8rem 0.3rem;
   }
 
   .contact-card {
     width: 40%;
     min-width: 100px;
-    margin: 0 1%;
   }
 
   .contact-card img {
-    width: 75%;
     max-width: 40px;
-    height: auto;
   }
 
   .contact-card h6 {
     font-size: 1.5vw;
   }
 
-  .contact-card a, .contact-card p {
+  .contact-card a,
+  .contact-card p {
     font-size: 1.3vw;
   }
 }
 
-/* Ajuste do footer em telas menores */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .page-footer {
     min-height: 60px;
     padding: 1.2rem;
   }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .page-footer {
     min-height: 70px;
     padding: 1.4rem;
