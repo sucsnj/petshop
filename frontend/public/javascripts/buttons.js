@@ -4,6 +4,8 @@ import { tools } from "./tools.js"; // funções auxiliares
 import { crud } from "./crud.js"; // funções para CRUD
 import { alerts } from "./alerts.js";
 
+let id = 1;
+
 const botoesPet = () => { // botões para a tela de pets
     $("#btn_novoPet").on('click', function () { // tela para adicionar um novo pet
         alerts.verificarLogin().then((resultado) => {
@@ -111,8 +113,8 @@ const botoesPedido = () => { // botões para a tela de pedidos
 }
 //botao do adicionar produtos no pedido
 $(document).ready(function () {
-  $(document).on('click', '.btnAdicionarProduto', function () {
-    const novoItem = `
+    $(document).on('click', '.btnAdicionarProduto', function () {
+        const novoItem = `
       <div class="card produtos col s12">
         <div class="row">
           <div class="input-field col s6">
@@ -129,18 +131,21 @@ $(document).ready(function () {
           <div class="col s3">
             <a class="waves-effect waves-light btn btnAdicionarProduto">Adicionar Produto</a>
           </div>
+            <div class="col s3">
+                <a class="waves-effect waves-light btn btnRemoverProduto">Remover Produto</a>
+            </div>
         </div>
       </div>
     `;
 
-    $('#produtos-container').append(novoItem);
-  });
+        $('#produtos-container').append(novoItem);
+    });
 });
-//botao do adicionar servico no pedido
+//botao do adicionar e remover servico no pedido
 $(document).ready(function () {
-  $(document).on('click', '.btnAdicionarServico', function () {
-    const novoItem = `
-      <div class="card produtos col s12">
+    $(document).on('click', '.btnAdicionarServico', function () {
+        const novoItem = `
+      <div id="${idDinamico()}" class="card produtos col s12">
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">build</i>
@@ -152,13 +157,33 @@ $(document).ready(function () {
                     <div class="col s3">
                         <a class="waves-effect waves-light btn btnAdicionarServico" style="margin-bottom: 10px;">Adicionar Servico</a>
                     </div>
+                    <!-- Botão para remover Servico -->
+                    <div class="col s3">
+                        <a id="btnRemover-${id}" onclick="removerItem()" class="waves-effect waves-light btn btnRemoverServico" style="margin-bottom: 10px;">Remover Servico</a>                            
+                    </div>
                 </div>
     `;
-    $('#servico-container').append(novoItem);
-  });
+        $('#servico-container').append(novoItem);
+    });
 });
 
+function idDinamico() {   
+    id++;
+    console.log(id)
+    return id;   
+} 
 
+//function removerItem() {
+//   $("#btnRemover-${id}").on('click', function () {
+//    console.log("botao remover servico", id)
+//   });
+//}
+
+$(document).on('click', '.btnRemoverServico', function () {
+        const idRemover = $(this).data('id');
+        $(`#item-${idRemover}`).remove();
+        console.log("Removido item", idRemover);
+    });
 
 
 export const buttons = {
