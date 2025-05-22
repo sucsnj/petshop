@@ -379,7 +379,7 @@ function cardServico(servicoId = null, quantidade = 1) {
         const novoItem = $(`<div class="card servicos col s12 blue lighten-5 z-depth-2">
     <div class="row">
         <div class="input-field col s4">
-            <i class="material-icons prefix">build</i>
+            <i class="material-icons prefix">local_hospital</i>
             <select name="Servico" class="browser-default">
                 ${options}
             </select>
