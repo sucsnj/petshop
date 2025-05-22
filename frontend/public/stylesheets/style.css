@@ -139,6 +139,23 @@ select.browser-default,
   transform: translateY(-50%);
 }
 
+.contact-card {
+  flex: 1;
+  margin: 0 0.5rem;
+  max-width: 15%; /* Diminuindo a largura */
+  min-width: 140px; /* Ajuste para telas menores */
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.contact-card {
+  transition: transform 0.3s ease-in-out; /* Animação suave */
+}
+
+.contact-card:hover {
+  transform: scale(1.15); /* Efeito de crescimento */
+}
+
 /* Responsividade */
 @media screen and (max-width: 1280px) {
   .container {
