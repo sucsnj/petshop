@@ -4,11 +4,26 @@ import { start } from './start.js';
 import { buttons } from './buttons.js';
 import { auth } from './login.js';
 import { masks } from './imask.js';
+import { charts } from './charts.js';
 
 $(document).ready(function () {
     masks.emailMask();
     masks.phoneMask();
     masks.ageMask();
+
+    // gráficos
+    $("#btnQuantidade").click(function () {
+        charts.graficoQuantidade();
+    });
+    $("#btnFaturamento").click(function () {
+        charts.graficoFaturamento();
+    });
+    $("#btnPedidosStatus").click(function () {
+        charts.graficoPedidosStatus();
+    });
+    $("#btnServicosTipo").click(function () {
+        charts.graficoServicosTipo();
+    });
 });
 
 $(window).on('load', function () {

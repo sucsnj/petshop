@@ -1,14 +1,44 @@
-<div class="container">
+<div id="dashboardContainer" class="container">
+    <!-- Cabeçalho do Dashboard -->
     <div class="card-panel blue darken-3 white-text center-align">
         <h4><i class="material-icons left">dashboard</i> Bem-vindo ao Dashboard</h4>
         <p>Você está autenticado e pode acessar recursos protegidos!</p>
     </div>
 
+    <!-- Botão de Logout -->
     <div class="row">
         <div class="col s12 center-align">
             <button id="logout" class="btn waves-effect waves-light red darken-2">
                 <i class="material-icons left">logout</i> Sair
             </button>
+        </div>
+    </div>
+
+    <!-- Estatísticas do PetShop -->
+    <div id="dashboardMenu" class="row">
+        <div class="col s12 card-panel blue lighten-5"> <!-- Fundo suave para o painel -->
+            <h4 class="center-align">📊 Estatísticas do PetShop</h4>
+        </div>
+
+        <!-- Botões para alternar os gráficos -->
+        <div class="col s12 center-align">
+            <a id="btnQuantidade" class="waves-effect waves-light btn blue darken-3">
+                <i class="material-icons left">bar_chart</i>Quantidade de Registros
+            </a>
+            <a id="btnFaturamento" class="waves-effect waves-light btn green darken-3">
+                <i class="material-icons left">attach_money</i>Faturamento
+            </a>
+            <a id="btnPedidosStatus" class="waves-effect waves-light btn orange darken-3">
+                <i class="material-icons left">timeline</i>Pedidos por Status
+            </a>
+            <a id="btnServicosTipo" class="waves-effect waves-light btn red darken-3">
+                <i class="material-icons left">local_hospital</i>Serviços por Tipo
+            </a>
+        </div>
+
+        <!-- Área do gráfico -->
+        <div class="col s12 card-panel white z-depth-2">
+            <canvas id="myChart" width="400" height="200"></canvas>
         </div>
     </div>
 </div>
