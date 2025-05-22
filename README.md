@@ -130,7 +130,7 @@ o swagger está disponível em `http://localhost:4000/api-docs`
 
 📑 `consultas.sql` → Arquivo de consultas do banco de dados. `(opcional)`
 
-📑 `database.sqlite` → Banco de dados do frontend.
+📑 `database.sqlite` → Banco de dados.
 
 ⚙️ `package-lock.json` → Arquivo de configuração do pacote.
 
@@ -147,7 +147,7 @@ o swagger está disponível em `http://localhost:4000/api-docs`
 
 ⚙️ `.env` → Arquivo de configuração do ambiente.
 
-⚙️ `env.example` → Exemplo de arquivo de configuração do ambiente. `(opcional)`
+⚙️ `.env.example` → Exemplo de arquivo de configuração do ambiente. `(opcional)`
 
 🔍 `.gitignore` → Arquivo de configuração do git.
 
