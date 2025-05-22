@@ -8,6 +8,17 @@ const {
     logarUsuario
 } = require('../model/users');
 
+// trecho com estrutura para requisições de segurança (token)
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
 
 /**
  * @swagger
@@ -71,9 +82,25 @@ router.post('/login', (req, res) => { // users/login POST - faz o login de um us
     logarUsuario(req, res);
 });
      
-                                                                    // users/perfil GET - retorna o perfil do usuário logado
-router.get('/perfil', autenticarToken, (req, res) => {              // o token deve ser devolvido sem aspas
-    res.json({ message: 'Acesso autorizado!', user: req.user });
+// ver perfis
+/**
+ * @swagger
+ * /users/perfil:
+ *   get:
+ *     summary: Retorna o perfil do usuário logado
+ *     tags:
+ *       - Usuários
+ *     description: Retorna o perfil do usuário logado
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Perfil do usuário
+ *       401:
+ *         description: Usuário não logado
+ */
+router.get('/perfil', autenticarToken, (req, res) => {              // users/perfil GET - retorna o perfil do usuário logado
+    res.json({ message: 'Acesso autorizado!', user: req.user });    // o token deve ser devolvido sem aspas
 });
 
 module.exports = router;

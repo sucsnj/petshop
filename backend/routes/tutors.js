@@ -9,6 +9,17 @@ const {
 } = require('../model/tutors');
 const autenticarToken = require('../middleware/auth'); // Importa a proteção por token
 
+// trecho com estrutura para requisições de segurança (token)
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
 /**
  * @swagger
  * /tutors:
@@ -48,6 +59,8 @@ router.get('/', function (req, res, next) {
  *    summary: Retorna um tutor
  *    tags: [Tutores]
  *    description: Retorna um tutor com base no id fornecido
+ *    security:
+ *      - BearerAuth: []
  *    parameters:
  *      - name: id
  *        in: path
@@ -85,6 +98,8 @@ router.get('/:id', function (req, res, next) {
  *    summary: Cria um novo tutor
  *    tags: [Tutores]
  *    description: Cria um novo tutor com os dados fornecidos
+ *    security:
+ *      - BearerAuth: []
  *    requestBody:
  *      required: true
  *      content:
@@ -115,6 +130,8 @@ router.post('/', autenticarToken, (req, res) => {
  *     summary: Atualiza um tutor existente
  *     tags: [Tutores] 
  *     description: Atualiza os dados de um tutor com base no id fornecido
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -152,6 +169,8 @@ router.patch('/:id', autenticarToken, (req, res) => {
  *     summary: Apaga um tutor existente
  *     tags: [Tutores] 
  *     description: Apaga os dados de um tutor com base no id fornecido
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path

@@ -9,6 +9,17 @@ const {
 } = require('../model/services');
 const autenticarToken = require('../middleware/auth'); // Importa a proteção por token
 
+// trecho com estrutura para requisições de segurança (token)
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
 /**
  * @swagger
  * /services:
@@ -89,6 +100,8 @@ router.get('/:id', function (req, res, next) {
  *    summary: Cria um novo serviço
  *    tags: [Serviços]
  *    description: Cria um novo serviço com os dados fornecidos
+ *    security:
+ *      - BearerAuth: []
  *    requestBody:
  *      required: true
  *      content:
@@ -121,6 +134,8 @@ router.post('/', autenticarToken, (req, res) => {
  *    summary: Atualiza um serviço existente
  *    tags: [Serviços]
  *    description: Atualiza os dados de um serviço com base no ID fornecido
+ *    security:
+ *      - BearerAuth: []
  *    parameters:
  *      - name: id
  *        in: path
@@ -160,6 +175,8 @@ router.patch('/:id', autenticarToken, (req, res) => {
  *    summary: Apaga um serviço existente
  *    tags: [Serviços]
  *    description: Apaga os dados de um serviço com base no ID fornecido
+ *    security:
+ *      - BearerAuth: []
  *    parameters:
  *      - name: id
  *        in: path

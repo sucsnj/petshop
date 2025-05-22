@@ -9,6 +9,17 @@ const {
 } = require('../model/pets');
 const autenticarToken = require('../middleware/auth'); // Importa a proteção por token
 
+// trecho com estrutura para requisições de segurança (token)
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
 /**
  * @swagger
  * /pets:
@@ -89,6 +100,8 @@ router.get('/:id', function (req, res, next) {
  *     summary: Cria um novo pet
  *     tags: [Pets]
  *     description: Cria um novo pet com base nos dados fornecidos
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -121,6 +134,8 @@ router.post('/', autenticarToken, (req, res) => {
  *     summary: Atualiza um pet existente
  *     tags: [Pets]
  *     description: Atualiza os dados de um pet com base no ID fornecido
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -161,6 +176,8 @@ router.patch('/:id', autenticarToken, (req, res) => {
  *     summary: Apaga um pet existente
  *     tags: [Pets]
  *     description: Apaga os dados de um pet com base no ID fornecido
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
