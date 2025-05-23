@@ -12,18 +12,14 @@ $(document).ready(function () {
     masks.ageMask();
 
     // gráficos
-    $("#btnQuantidade").click(function () {
-        charts.graficoQuantidade();
-    });
-    $("#btnFaturamento").click(function () {
-        charts.graficoFaturamento();
-    });
-    $("#btnPedidosStatus").click(function () {
-        charts.graficoPedidosStatus();
-    });
-    $("#btnServicosTipo").click(function () {
-        charts.graficoServicosTipo();
-    });
+    if (window.location.href.includes("dashboard")) {
+        setTimeout(() => {
+            charts.graficoQuantidade();
+            charts.graficoFaturamento();
+            charts.graficoPedidosStatus();
+            charts.graficoServicosTipo();
+        }, 2000);
+    }
 });
 
 $(window).on('load', function () {

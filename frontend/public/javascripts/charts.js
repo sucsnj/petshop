@@ -1,12 +1,15 @@
 let chartInstance = null;
 
-function graficoQuantidade() {
+function verificarGrafico(id) { // remove o gráfico antigo e recria o novo
     if (chartInstance) {
         chartInstance.destroy(); // Remove o gráfico antigo
-        if ($("#myChart").length) {
-            $("#myChart").replaceWith('<canvas id="myChart" width="400" height="200"></canvas>'); // Recria o canvas apenas se necessário
+        if ($(`#${id}`).length) {
+            $(`#${id}`).replaceWith(`<canvas id="${id}" width="400" height="200"></canvas>`); // Recria o canvas apenas se necessário
         }
     }
+}
+
+function graficoQuantidade() {
 
     Promise.all([
         fetch(url + "tutors").then(res => res.json()),
@@ -15,7 +18,7 @@ function graficoQuantidade() {
         fetch(url + "services").then(res => res.json()),
         fetch(url + "orders").then(res => res.json()),
     ]).then(([tutors, pets, products, services, orders]) => {
-        const newCtx = $("#myChart")[0].getContext("2d"); // Pegando o novo canvas corretamente
+        const newCtx = $("#quantidade")[0].getContext("2d"); // Pegando o novo canvas corretamente
 
         chartInstance = new Chart(newCtx, { // Armazena o novo gráfico
             type: "bar",
@@ -38,12 +41,6 @@ function graficoQuantidade() {
 }
 
 function graficoFaturamento() {
-    if (chartInstance) {
-        chartInstance.destroy();
-        if ($("#myChart").length) {
-            $("#myChart").replaceWith('<canvas id="myChart" width="400" height="200"></canvas>');
-        }
-    }
 
     fetch(url + "orders")
         .then(res => res.json())
@@ -52,7 +49,7 @@ function graficoFaturamento() {
 
             console.log("Faturamento Total:", totalFaturamento);
 
-            const newCtx = $("#myChart")[0].getContext("2d");
+            const newCtx = $("#faturamento")[0].getContext("2d");
 
             chartInstance = new Chart(newCtx, {
                 type: "bar",
@@ -75,12 +72,6 @@ function graficoFaturamento() {
 }
 
 function graficoPedidosStatus() {
-    if (chartInstance) {
-        chartInstance.destroy();
-        if ($("#myChart").length) {
-            $("#myChart").replaceWith('<canvas id="myChart" width="400" height="200"></canvas>');
-        }
-    }
 
     fetch(url + "orders")
         .then(res => res.json())
@@ -92,7 +83,7 @@ function graficoPedidosStatus() {
 
             console.log(statusCount);
 
-            const newCtx = $("#myChart")[0].getContext("2d");
+            const newCtx = $("#statusPedidos")[0].getContext("2d");
 
             chartInstance = new Chart(newCtx, {
                 type: "pie",
@@ -112,24 +103,18 @@ function graficoPedidosStatus() {
 }
 
 function graficoServicosTipo() {
-    if (chartInstance) {
-        chartInstance.destroy();
-        if ($("#myChart").length) {
-            $("#myChart").replaceWith('<canvas id="myChart" width="400" height="200"></canvas>');
-        }
-    }
 
     fetch(url + "services")
         .then(res => res.json())
         .then(services => {
             const serviceTypes = services.reduce((acc, service) => {
-                acc[service.tipo] = (acc[service.tipo] || 0) + 1;
+                acc[service.name] = (acc[service.name] || 0) + 1;
                 return acc;
             }, {});
 
             console.log(serviceTypes);
 
-            const newCtx = $("#myChart")[0].getContext("2d");
+            const newCtx = $("#servicosTipo")[0].getContext("2d");
 
             chartInstance = new Chart(newCtx, {
                 type: "bar",
